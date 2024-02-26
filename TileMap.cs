@@ -50,18 +50,18 @@ namespace Tile_Engine
 
         public bool MoveNext()
         {
-            if (Index[0, 1] >= Map.GetLength(1) - 1)
+            if (Index[0, 1] >= Map.GetLength(1) - 1) //x >= X
             {
-                if (Index[0, 0] >= Map.GetLength(0) - 1)
+                if (Index[0, 0] >= Map.GetLength(0) - 1) //y >= Y
                 {
                     Reset();
                     return false;
                 }
-                Index[0, 1] = 0;
-                Index[0, 0]++;
+                Index[0, 1] = 0; //x=0
+                Index[0, 0]++; //y++
                 return true;
             }
-            Index[0, 1]++;
+            Index[0, 1]++; //x++
             return true;
         }
 

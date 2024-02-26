@@ -10,8 +10,8 @@ namespace Tile_Engine
 {
     internal struct Position
     {
-        public readonly int X;
-        public readonly int Y;
+        public int X { get; }
+        public int Y { get; }
 
         public Position(int x, int y)
         {
@@ -24,7 +24,7 @@ namespace Tile_Engine
             return $"({X},{Y})";
         }
 
-        public override bool Equals([NotNullWhen(true)] object? obj)
+        public override bool Equals([NotNullWhen(true)] object obj)
         {
             if(obj == null) throw new ArgumentNullException(nameof(obj));
             if (obj is not Position pos) throw new ArgumentException("object must be struct Position");
