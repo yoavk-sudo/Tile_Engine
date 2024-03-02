@@ -9,7 +9,7 @@ namespace Tile_Engine
 {
     internal class TileMap : IEnumerable<Tile>, IEnumerator<Tile>, IIntIndexer
     {
-        public Tile[,] Map { get; set; }
+        internal static Tile[,] Map { get; private set; }
         
         public TileMap(int x, int y) 
         {
@@ -23,6 +23,7 @@ namespace Tile_Engine
             }
         }
 
+        #region Enumartor
         public Tile Current => Map[Index[0, 0], Index[0, 1]];
 
         object IEnumerator.Current => Current;
@@ -74,6 +75,38 @@ namespace Tile_Engine
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+        #endregion
+
+        public static bool IsTileEmpty(Position pos)
+        {
+            if(!IsPositionValid(pos)) 
+                return false;
+            return Map[pos.X, pos.Y].IsEmpty;
+        }
+
+        public static bool IsPositionValid(Position pos)
+        {
+            if (pos.X < 0 || pos.Y < 0)
+                return false;
+            return pos.X < Map.GetLength(0) && pos.Y < Map.GetLength(1);
+        }
+
+        public void AddNewObject(TileObject obj, Position pos)
+        {
+            if (obj == null) throw new ArgumentNullException("object was null");
+            if (!IsPositionValid(pos))
+            {
+                Console.WriteLine("object position is out of bounds, invalid");
+                return;
+            }
+            if(!IsTileEmpty(pos))
+            {
+                Console.WriteLine($"Tile is not empty, cannot place {obj} in it.");
+                return;
+            }
+            Map[pos.X, pos.Y].TileObject = obj;
+            Console.WriteLine($"{obj} is now in the Tile Map, position is: {pos}");
         }
     }
 }

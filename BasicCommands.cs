@@ -26,7 +26,7 @@ namespace Tile_Engine
 
         private TileObject _selectedObject;
 
-        public BasicCommands()
+        internal BasicCommands()
         {
             OnHelp += HelpPrint;
             OnSelect += Select;
@@ -49,21 +49,30 @@ namespace Tile_Engine
                 Console.Write(Commands.CommandDescriptions.Keys.ToArray()[i] + "\t");
                 Console.Write(Commands.CommandDescriptions.Values.ToArray()[i] + "\n");
             }
+            Console.WriteLine();
         }
         void Select()
         {
+            if (TileMap.Map == null)
+            {
+                Console.WriteLine("TileMap was not created");
+                return;
+            }
             int x = -1, y = -1;
-            while(x < 0) //|| x > TileMap.Map.GetLength(0))
+
+            Console.WriteLine("Enter a valid x coordinate:");
+            int.TryParse(Console.ReadLine(), out x);
+
+            Console.WriteLine("Enter a valid y coordinate:");
+            int.TryParse(Console.ReadLine(), out y);
+            
+            if (!TileMap.IsPositionValid(new Position(x, y)))
             {
-                Console.WriteLine("Enter x coordinate:");
-                int.TryParse(Console.ReadLine(), out x);
+                Console.WriteLine("Attempted to select outside of map bounds.");
+                return;
             }
-            while(y < 0)
-            {
-                Console.WriteLine("Enter y coordinate:");
-                int.TryParse(Console.ReadLine(), out y);
-            }
-            //_selectedObject = TileMap.Map[x,y].TileObject;
+            _selectedObject = TileMap.Map[x,y].TileObject;
+            Console.WriteLine($"Selected {_selectedObject}");
         }
         void Deselect()
         {
@@ -73,7 +82,7 @@ namespace Tile_Engine
         {
             if(_selectedObject == null )
             {
-                Console.WriteLine("Select a tile");
+                Console.WriteLine("Select a tile with an object in it");
                 return;
             }
         }

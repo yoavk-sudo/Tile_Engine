@@ -36,7 +36,8 @@ namespace Tile_Engine
             }
             catch (KeyNotFoundException)
             {
-                Console.WriteLine($"Exception of type {nameof(KeyNotFoundException)}: {commandName} not found. Here is a list of available commands:");
+                Console.WriteLine($"Exception of type {nameof(KeyNotFoundException)}: {commandName} not found." +
+                    $" Here is a list of available commands:");
             }
             CommandFunctions.GetValueOrDefault("/help").Invoke();
         }

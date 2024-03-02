@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tile_Engine
+﻿namespace Tile_Engine
 {
     internal class Tile : IPosition
     {
@@ -15,7 +9,7 @@ namespace Tile_Engine
 
         public override string ToString()
         {
-            return Position.ToString();
+            return TileObject.ToString() + ", " + Position.ToString();
         }
 
         public Tile(Position position)
