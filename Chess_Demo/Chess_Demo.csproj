@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Renderer\Renderer.csproj" />
-    <ProjectReference Include="..\Tile_Engine\Tile_Engine.csproj" />
+    <ProjectReference Include="..\Engine\Tile_Engine.csproj" />
   </ItemGroup>
 
 </Project>
