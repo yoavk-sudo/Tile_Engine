@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    internal class TileObject : ICloneable
+    public class TileObject : ICloneable
     {
         public string Name { get; set; }
 

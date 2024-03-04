@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    internal class TileMap : IEnumerable<Tile>, IEnumerator<Tile>, IIntIndexer
+    public class TileMap : IEnumerable<Tile>, IEnumerator<Tile>, IIntIndexer
     {
-        internal static Tile[,] Map { get; private set; }
+        public static Tile[,] Map { get; private set; }
         
         public TileMap(int x, int y) 
         {

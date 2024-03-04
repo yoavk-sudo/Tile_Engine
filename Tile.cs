@@ -1,6 +1,6 @@
 ﻿namespace Tile_Engine
 {
-    internal class Tile : IPosition
+    public class Tile : IPosition
     {
         public Position Position { get; }
         public TileObject TileObject { get; set; } = null;

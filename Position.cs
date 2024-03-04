@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    internal struct Position
+    public struct Position
     {
         public int X { get; }
         public int Y { get; }
