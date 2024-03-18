@@ -66,7 +66,7 @@ namespace Tile_Engine
             Console.WriteLine("Enter a valid y coordinate:");
             int.TryParse(Console.ReadLine(), out y);
             
-            if (!TileMap.IsPositionValid(new Position(x, y)))
+            if (!TileMap.Map.IsWithinBounds(x, y))
             {
                 Console.WriteLine("Attempted to select outside of map bounds.");
                 return;

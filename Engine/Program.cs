@@ -1,12 +1,22 @@
-﻿namespace Tile_Engine
+﻿using System.Text.RegularExpressions;
+
+namespace Tile_Engine
 {
     internal class Program
     {
         
         static void Main(string[] args)
         {
-            Commands.ExecuteCommand(2.ToString());
             TileMap map = new(3, 5);
+            Console.WriteLine(map.Current);
+            map.MoveNext();Console.WriteLine(map.Current);
+            map.MoveNext();Console.WriteLine(map.Current);
+            map.MoveNext();Console.WriteLine(map.Current);
+            map.MoveNext();Console.WriteLine(map.Current);
+            map.MoveNext();Console.WriteLine(map.Current);
+            map.MoveNext();
+            Commands.ExecuteCommand(2.ToString());
+            Commands.ExecuteCommand("SE LECT     ".TrimAndDecapitalize());
             TileObject obj = new("AAAA");
             for (int i = 0; i < 3; i++)
             {

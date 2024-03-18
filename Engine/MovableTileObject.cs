@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    internal class MovableTileObject : TileObject
+    public class MovableTileObject : TileObject
     {
         public MovableTileObject(string name) : base(name)
         {
         }
+
+        //public override object Clone()
+        //{
+        //    return (MovableTileObject)base.Clone();
+        //}
     }
 }

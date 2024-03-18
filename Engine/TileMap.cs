@@ -51,26 +51,58 @@ namespace Tile_Engine
 
         public bool MoveNext()
         {
-            if (Index[0, 1] >= Map.GetLength(1) - 1) //x >= X
+            if (Index[0,1] < Map.GetLength(1) - 1)
             {
-                if (Index[0, 0] >= Map.GetLength(0) - 1) //y >= Y
-                {
-                    Reset();
-                    return false;
-                }
-                Index[0, 1] = 0; //x=0
-                Index[0, 0]++; //y++
+                return TryMoveHorizontal();
+            }
+            else
+            {
+                return TryMoveVertical();
+            }
+            //if (Index[0, 1] >= Map.GetLength(1) - 1) //x >= X
+            //{
+            //    if (Index[0, 0] >= Map.GetLength(0) - 1) //y >= Y
+            //    {
+            //        Index[0, 0] = 0;
+            //        Index[0, 1] = 0;
+            //        return false;
+            //    }
+            //    Index[0, 1] = 0; //x=0
+            //    Index[0, 0]++; //y++
+            //    return true;
+            //}
+            //Index[0, 1]++; //x++
+            //return true;
+        }
+
+        private bool TryMoveVertical()
+        {
+            if (--Index[0, 0] >= 0) //y--
+            {
                 return true;
             }
-            Index[0, 1]++; //x++
+            if ((Index[0, 0] += 2) >= Map.GetLength(0) - 1) //y >= Y
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool TryMoveHorizontal()
+        {
+            if (--Index[0, 1] >= 0) //x--
+            {
+                return true;
+            }
+            if ((Index[0, 1] += 2) >= Map.GetLength(1) - 1) //x >= X
+            {
+                return TryMoveVertical();
+            }
             return true;
         }
 
         public void Reset()
-        {
-            Index[0,0] = 0;
-            Index[0,1] = 0;
-        }
+        {}
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -80,22 +112,20 @@ namespace Tile_Engine
 
         public static bool IsTileEmpty(Position pos)
         {
-            if(!IsPositionValid(pos)) 
+            if (Map == null)
+                throw new ArgumentNullException("Map is null");
+            if(!Map.IsWithinBounds(pos.X, pos.Y)) 
                 return false;
             return Map[pos.X, pos.Y].IsEmpty;
         }
 
-        public static bool IsPositionValid(Position pos)
-        {
-            if (pos.X < 0 || pos.Y < 0)
-                return false;
-            return pos.X < Map.GetLength(0) && pos.Y < Map.GetLength(1);
-        }
-
         public void AddNewObject(TileObject obj, Position pos)
         {
-            if (obj == null) throw new ArgumentNullException("object was null");
-            if (!IsPositionValid(pos))
+            if (obj == null) 
+                throw new ArgumentNullException("object was null");
+            if (Map == null)
+                throw new ArgumentNullException("Map is null"); 
+            if (!Map.IsWithinBounds(pos.X, pos.Y))
             {
                 Console.WriteLine("object position is out of bounds, invalid");
                 return;

@@ -9,7 +9,8 @@
 
         public override string ToString()
         {
-            return TileObject.ToString() + ", " + Position.ToString();
+            //return TileObject.ToString() + ", " + Position.ToString();
+            return Position.ToString();
         }
 
         public Tile(Position position)

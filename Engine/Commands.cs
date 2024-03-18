@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    internal static class Commands
+    public static class Commands
     {
         private static Dictionary<string, Action> _commandFunctions = new Dictionary<string, Action>();
         private static Dictionary<string, string> _commandDescriptions = new Dictionary<string, string>();
@@ -21,12 +21,14 @@ namespace Tile_Engine
 
         public static void CreateNewCommand(string commandName, string description, Action action)
         {
+            commandName = commandName.TrimAndDecapitalize();
             CommandFunctions.Add(commandName, action);
             CommandDescriptions.Add(commandName, description);
         }
 
         public static void ExecuteCommand(string commandName)
         {
+            commandName = commandName.TrimAndDecapitalize();
             try
             {
                 if (!CommandFunctions.ContainsKey(commandName))
@@ -38,8 +40,8 @@ namespace Tile_Engine
             {
                 Console.WriteLine($"Exception of type {nameof(KeyNotFoundException)}: {commandName} not found." +
                     $" Here is a list of available commands:");
+                CommandFunctions.GetValueOrDefault("/help").Invoke();
             }
-            CommandFunctions.GetValueOrDefault("/help").Invoke();
         }
     }
 }

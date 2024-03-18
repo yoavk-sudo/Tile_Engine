@@ -19,7 +19,7 @@ namespace Tile_Engine
         {
             return Name;
         }
-        public object Clone()
+        public virtual object Clone()
         {
             return new TileObject(Name);
         }
