@@ -1,3 +1,3 @@
 ﻿
-using var game = new Renderer.Game1();
+using var game = new Renderer.Renderer();
 game.Run();
