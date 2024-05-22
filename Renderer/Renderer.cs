@@ -7,6 +7,19 @@ namespace Renderer;
 
 public class Renderer : Game
 {
+    private static Renderer instance = null;
+    public static Renderer Instance { get 
+        {
+            if (instance == null)
+            {
+                instance = new Renderer();
+            }
+            return instance;
+
+        } }
+
+
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -27,7 +40,7 @@ public class Renderer : Game
     private Matrix _screenScaleMatrix;
     private Viewport _viewport;
 
-    public Renderer()
+    private Renderer()
     {
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = _resolutionWidth;
