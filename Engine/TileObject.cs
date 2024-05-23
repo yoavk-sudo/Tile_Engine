@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Renderer;
 
 namespace Tile_Engine
 {
@@ -14,14 +15,18 @@ namespace Tile_Engine
         public Actor Owner { get; }
         public Movement Movement { get; private set; }
         public Tile CurrentTile { get; set; }
+        public IRenderableGamePiece Texture { get; set; }
+        
 
         public event Action OnMove;
 
-        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner)
+        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, IRenderableGamePiece texture, ISprite sprite)
         {
             Owner = owner;
             CurrentTile = currentTile;
             Movement = new Movement(this, movePatterns);
+            Texture = texture;
+            Texture.Init(sprite, new Vector2(currentTile.Position.X, currentTile.Position.Y));
         }
 
         public bool TryMove(Tile newTile)

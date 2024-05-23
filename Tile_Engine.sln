@@ -14,13 +14,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess_Demo", "Chess_Demo\Ch
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tile_Engine", "Engine\Tile_Engine.csproj", "{520305F9-9036-46C9-A7C3-1D50C4483AA9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoTileGame", "MonoTileGame\MonoTileGame.csproj", "{16B8068C-1BC0-4C74-82C4-68C9E304D7C1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5EC041A0-1EC7-4E61-995C-EBEB1EF734B0} = {5EC041A0-1EC7-4E61-995C-EBEB1EF734B0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderer", "Renderer\Renderer.csproj", "{5EC041A0-1EC7-4E61-995C-EBEB1EF734B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoTileGame", "MonoTileGame\MonoTileGame.csproj", "{16B8068C-1BC0-4C74-82C4-68C9E304D7C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Renderer", "Renderer\Renderer.csproj", "{5EC041A0-1EC7-4E61-995C-EBEB1EF734B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
