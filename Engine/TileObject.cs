@@ -1,27 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    public class TileObject : ICloneable
+    public abstract class TileObject : ICloneable
     {
         public string Name { get; set; }
+        public Position Position => CurrentTile.Position;
+        public Actor Owner { get; }
+        public Movement Movement { get; private set; }
+        public Tile CurrentTile { get; set; }
 
-        public TileObject(string name) 
+        public event Action OnMove;
+
+        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner)
+        {
+            Owner = owner;
+            CurrentTile = currentTile;
+            Movement = new Movement(this, movePatterns);
+        }
+
+        public bool TryMove(Tile newTile)
+        {
+            if (newTile == null || !Movement.GetPossibleMoves().Contains(newTile.Position)) return false;
+
+            if (!CanMoveToTile(newTile)) 
+                return false;
+            CurrentTile.TileObject = null;
+            OnMoveCallback(newTile);
+            OnMove.Invoke();
+            newTile.NewTileObject(this);
+            CurrentTile = newTile;
+
+            return true;
+        }
+        public  void OnMoveCallback(Tile newTile)
+        {
+
+        }
+        public void Move()
+        { }
+        protected abstract bool CanMoveToTile(Tile newTile);
+
+        public TileObject(string name, Actor owner) 
         {
             Name = name;
+            Owner = owner;
         }
 
         public override string ToString()
         {
             return Name;
         }
-        public virtual object Clone()
-        {
-            return new TileObject(Name);
-        }
+        public abstract object Clone();
     }
 }
