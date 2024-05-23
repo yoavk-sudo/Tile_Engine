@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Renderer;
 
 namespace Tile_Engine
 {
@@ -11,14 +12,14 @@ namespace Tile_Engine
     {
         public static Tile[,] Map { get; private set; }
         
-        public TileMap(int x, int y) 
+        public TileMap(int x, int y, IRenderable TileRenderer,ISprite DefaultSprite) 
         {
             Map = new Tile[x, y];
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
-                    Map[i, j] = new Tile(new Position(i, j));
+                    Map[i, j] = new Tile(new Position(i, j), TileRenderer, DefaultSprite);
                 }
             }
         }

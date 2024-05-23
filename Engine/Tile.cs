@@ -9,7 +9,7 @@ namespace Tile_Engine
         public TileObject TileObject { get; set; } = null;
         public bool IsEmpty { get {  return TileObject == null; } }
         //public Actor Actor { get; set; }
-        public IRenderableTile Texture { get; set; }
+        public IRenderable Texture { get; set; }
 
         public override string ToString()
         {
@@ -17,11 +17,11 @@ namespace Tile_Engine
             return Position.ToString();
         }
 
-        public Tile(Position position, IRenderableTile texture, ISprite sprite)
+        public Tile(Position position, IRenderable texture, ISprite sprite)
         {
             Position = position;
             Texture = texture;
-            Texture.Init(sprite, new Vector2(Position.X, Position.Y));
+            Texture.Init(sprite);
         }
 
         public virtual void NewTileObject(TileObject tObject)

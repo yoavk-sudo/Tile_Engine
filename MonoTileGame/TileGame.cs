@@ -2,32 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using Tile_Engine;
 
 namespace MonoTileGame
 {
     public class TileGame : Game
     {
-        private static TileGame instance = null;
-        public static TileGame Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new TileGame();
-                }
-                return instance;
-
-            }
-        }
-
-
+        
+        private Color BackgroundColor = Color.Black;
+        private bool _UseBackground = false;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        Texture2D _BakgroundTexture;
-        Texture2D _TileTexture;
 
         // Target Resolution
         private readonly int _resolutionWidth = 1920;
@@ -43,7 +29,12 @@ namespace MonoTileGame
         private Matrix _screenScaleMatrix;
         private Viewport _viewport;
 
-        private TileGame()
+        //Game Data
+
+        private TileMap _tileMap;
+        private int TileSize;
+
+        public TileGame(TileMap tileMap)
         {
             _graphics = new GraphicsDeviceManager(this);
             _graphics.PreferredBackBufferWidth = _resolutionWidth;
@@ -54,6 +45,9 @@ namespace MonoTileGame
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnClientSizeChanged;
+
+            LoadLibrary.Instance.Game = this;
+            _tileMap = tileMap;
         }
 
         private void OnClientSizeChanged(object sender, EventArgs e)
@@ -108,8 +102,7 @@ namespace MonoTileGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _BakgroundTexture = Content.Load<Texture2D>("Fallen Angel Presentation Background");
-            _TileTexture = Content.Load<Texture2D>("Ball");
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -124,15 +117,15 @@ namespace MonoTileGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(BackgroundColor);
 
             GraphicsDevice.Viewport = _viewport;
+
+            TileSize = Math.Min((int)(_graphics.PreferredBackBufferWidth / TileMap.Map.GetLength(0)), (int)(_graphics.PreferredBackBufferHeight / TileMap.Map.GetLength(1)));
 
             HandleBackground();
 
             HandleTiles();
-
-            HandleTileHighlights();
 
             HandleGamePieces();
 
@@ -142,24 +135,58 @@ namespace MonoTileGame
 
         protected void HandleBackground()
         {
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _screenScaleMatrix);
-            _spriteBatch.Draw(_BakgroundTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
-            _spriteBatch.End();
+            if (_UseBackground)
+            {
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _screenScaleMatrix);
+                _spriteBatch.Draw(LoadLibrary.Instance.GetTexture("BackgroundTexture"), new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+                _spriteBatch.End();
+            }
+            
         }
 
         protected void HandleTiles()
         {
-            // throw new NotImplementedException();
-        }
-
-        protected void HandleTileHighlights()
-        {
-            // throw new NotImplementedException();
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _screenScaleMatrix);
+            for (int x = 0; x < TileMap.Map.GetLength(0); x++)
+            {
+                for (int y = 0; y < TileMap.Map.GetLength(1); y++)
+                {
+                    _spriteBatch.Draw(LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].Texture).sprite.Key),new Rectangle(x*TileSize,y*TileSize,(x+1)*TileSize,(y + 1) * TileSize), ((TileRenderer)TileMap.Map[x, y].Texture).tint);
+                }
+            }
+            _spriteBatch.End();
         }
 
         protected void HandleGamePieces()
         {
-            // throw new NotImplementedException();
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _screenScaleMatrix);
+            for (int x = 0; x < TileMap.Map.GetLength(0); x++)
+            {
+                for (int y = 0; y < TileMap.Map.GetLength(1); y++)
+                {
+                    if (TileMap.Map[x, y].TileObject != null)
+                    {
+                        _spriteBatch.Draw(
+                            LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].TileObject.Texture).sprite.Key), 
+                            new Rectangle(x * TileSize, y * TileSize, (x + 1) * TileSize, (y + 1) * TileSize),
+                            ((TileRenderer)TileMap.Map[x, y].TileObject.Texture).tint);
+                    }
+                    
+                }
+            }
+            _spriteBatch.End();
+        }
+
+        public void UpdateBackground(Color backgraoundColor, bool UseSprite)
+        {
+            BackgroundColor = backgraoundColor;
+            _UseBackground = UseSprite;
+        }
+
+        public void UpdateBackground(string SpriteUrl, bool UseSprite)
+        {
+            LoadLibrary.Instance.UpdateData("BackgroundTexture", SpriteUrl);
+            _UseBackground = UseSprite;
         }
 
 

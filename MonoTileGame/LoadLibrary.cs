@@ -13,6 +13,10 @@ namespace MonoTileGame
     public class LoadLibrary
     {
         private static LoadLibrary instance = null;
+
+        private TileGame game;
+
+        public TileGame Game { set { game = value; } }
         public static LoadLibrary Instance
         {
             get
@@ -31,7 +35,7 @@ namespace MonoTileGame
         {
             Data = new Dictionary<string, Texture2D>
             {
-                { "Missing_Texture", TileGame.Instance.Content.Load<Texture2D>("MissingTexture") }
+                { "Missing_Texture", game.Content.Load<Texture2D>("MissingTexture") }
             };
         }
 
@@ -39,20 +43,41 @@ namespace MonoTileGame
         {
             if (!Data.ContainsKey(Key))
             {
-                Data.Add(Key, TileGame.Instance.Content.Load<Texture2D>(url));
+                Data.Add(Key, game.Content.Load<Texture2D>(url));
             }
         }
 
-        public void LoadData(IRenderable LoadObject)
+        public void LoadData(Sprite LoadObject)
         {
             LoadData(LoadObject.Key, LoadObject.url);
         }
 
-        public Texture2D GetTexture(IRenderable Subject) 
+        public void UpdateData(string Key, string url)
+        {
+            if (!Data.ContainsKey(Key))
+            {
+                LoadData(Key, url);
+            }
+            else
+            {
+                Data[Key] = game.Content.Load<Texture2D>(url);
+            }
+        }
+
+        public Texture2D GetTexture(Sprite Subject) 
         {
             if (Data.ContainsKey(Subject.Key))
             {
                 return Data[Subject.Key];
+            }
+            return Data["Missing_Texture"];
+        }
+
+        public Texture2D GetTexture(string Key)
+        {
+            if (Data.ContainsKey(Key))
+            {
+                return Data[Key];
             }
             return Data["Missing_Texture"];
         }

@@ -15,18 +15,18 @@ namespace Tile_Engine
         public Actor Owner { get; }
         public Movement Movement { get; private set; }
         public Tile CurrentTile { get; set; }
-        public IRenderableGamePiece Texture { get; set; }
+        public IRenderable Texture { get; set; }
         
 
         public event Action OnMove;
 
-        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, IRenderableGamePiece texture, ISprite sprite)
+        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, IRenderable texture, ISprite sprite)
         {
             Owner = owner;
             CurrentTile = currentTile;
             Movement = new Movement(this, movePatterns);
             Texture = texture;
-            Texture.Init(sprite, new Vector2(currentTile.Position.X, currentTile.Position.Y));
+            Texture.Init(sprite);
         }
 
         public bool TryMove(Tile newTile)
