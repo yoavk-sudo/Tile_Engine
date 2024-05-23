@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Renderer
+namespace MonoTileGame
 {
     public class LoadLibrary
     {
@@ -30,7 +30,7 @@ namespace Renderer
         {
             Data = new Dictionary<string, Texture2D>
             {
-                { "Missing_Texture", Renderer.Instance.Content.Load<Texture2D>("MissingTexture") }
+                { "Missing_Texture", TileGame.Instance.Content.Load<Texture2D>("MissingTexture") }
             };
         }
 
@@ -38,7 +38,7 @@ namespace Renderer
         {
             if (!Data.ContainsKey(Key))
             {
-                Data.Add(Key, Renderer.Instance.Content.Load<Texture2D>(url));
+                Data.Add(Key, TileGame.Instance.Content.Load<Texture2D>(url));
             }
         }
 
