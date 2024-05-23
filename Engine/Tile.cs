@@ -17,5 +17,10 @@
         {
             Position = position;
         }
+
+        public virtual void NewTileObject(TileObject tObject)
+        {
+            TileObject = tObject;
+        }
     }
 }
