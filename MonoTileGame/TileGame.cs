@@ -34,6 +34,9 @@ namespace MonoTileGame
         private TileMap _tileMap;
         private int TileSize;
 
+        public event Action<Tile> MousePressedOnTile;
+        public event Action<int, int> MousePressedOutsideOfTileMap;
+
         public TileGame(TileMap tileMap)
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -95,6 +98,7 @@ namespace MonoTileGame
         {
             // TODO: Add your initialization logic here
             UpdateScreenScaleMatrix();
+            TileSize = Math.Min((int)(_graphics.PreferredBackBufferWidth / TileMap.Map.GetLength(0)), (int)(_graphics.PreferredBackBufferHeight / TileMap.Map.GetLength(1)));
             base.Initialize();
         }
 
@@ -107,10 +111,16 @@ namespace MonoTileGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            MouseState inputData = Mouse.GetState();
 
-            // TODO: Add your update logic here
+            if (inputData.X > TileSize* TileMap.Map.GetLength(0) || inputData.Y > TileSize * TileMap.Map.GetLength(1))
+            {
+                MousePressedOutsideOfTileMap.Invoke(inputData.X,inputData.Y);
+            }
+            else
+            {
+                MousePressedOnTile.Invoke(TileMap.Map[inputData.X / TileSize, inputData.Y / TileSize]);
+            }
 
             base.Update(gameTime);
         }
