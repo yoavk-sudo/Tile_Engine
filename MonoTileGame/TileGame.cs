@@ -34,8 +34,8 @@ namespace MonoTileGame
         private TileMap _tileMap;
         private int TileSize;
 
-        public event Action<Tile> MousePressedOnTile;
-        public event Action<int, int> MousePressedOutsideOfTileMap;
+        public event Action<Tile> MousePressedOnTile = (t) => { return; };
+        public event Action<int, int> MousePressedOutsideOfTileMap = (t,s) => { return; };
 
         public TileGame(TileMap tileMap)
         {
@@ -46,11 +46,24 @@ namespace MonoTileGame
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            
+
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnClientSizeChanged;
 
-            LoadLibrary.Instance.Game = this;
+            LoadLibrary.Instance.Init(this);
+
             _tileMap = tileMap;
+
+            
+            foreach (Tile T in _tileMap)
+            {
+                T.InitTexture();
+                if (!T.IsEmpty)
+                {
+                    T.TileObject.InitTexture();
+                }
+            }
         }
 
         private void OnClientSizeChanged(object sender, EventArgs e)
@@ -99,6 +112,7 @@ namespace MonoTileGame
             // TODO: Add your initialization logic here
             UpdateScreenScaleMatrix();
             TileSize = Math.Min((int)(_graphics.PreferredBackBufferWidth / TileMap.Map.GetLength(0)), (int)(_graphics.PreferredBackBufferHeight / TileMap.Map.GetLength(1)));
+            
             base.Initialize();
         }
 
@@ -112,14 +126,16 @@ namespace MonoTileGame
         protected override void Update(GameTime gameTime)
         {
             MouseState inputData = Mouse.GetState();
-
-            if (inputData.X > TileSize * TileMap.Map.GetLength(0) || inputData.Y > TileSize * TileMap.Map.GetLength(1))
+            if (inputData.LeftButton == ButtonState.Pressed)
             {
-                MousePressedOutsideOfTileMap.Invoke(inputData.X, inputData.Y);
-            }
-            else
-            {
-                MousePressedOnTile.Invoke(TileMap.Map[inputData.X / TileSize, inputData.Y / TileSize]);
+                if (inputData.X > TileSize * TileMap.Map.GetLength(0) || inputData.Y > TileSize * TileMap.Map.GetLength(1))
+                {
+                    MousePressedOutsideOfTileMap.Invoke(inputData.X, inputData.Y);
+                }
+                else
+                {
+                    MousePressedOnTile.Invoke(TileMap.Map[inputData.X / TileSize, inputData.Y / TileSize]);
+                }
             }
 
             base.Update(gameTime);
@@ -161,7 +177,7 @@ namespace MonoTileGame
             {
                 for (int y = 0; y < TileMap.Map.GetLength(1); y++)
                 {
-                    _spriteBatch.Draw(LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].Texture).sprite.Key), new Rectangle(x * TileSize, y * TileSize, (x + 1) * TileSize, (y + 1) * TileSize), ((TileRenderer)TileMap.Map[x, y].Texture).tint);
+                    _spriteBatch.Draw(LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].Texture).sprite.Key), new Rectangle(x * TileSize, y * TileSize, TileSize, TileSize), ((TileRenderer)TileMap.Map[x, y].Texture).tint);
                 }
             }
             _spriteBatch.End();
@@ -178,7 +194,7 @@ namespace MonoTileGame
                     {
                         _spriteBatch.Draw(
                             LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].TileObject.Texture).sprite.Key),
-                            new Rectangle(x * TileSize, y * TileSize, (x + 1) * TileSize, (y + 1) * TileSize),
+                            new Rectangle(x * TileSize, y * TileSize, TileSize, TileSize),
                             ((TileRenderer)TileMap.Map[x, y].TileObject.Texture).tint);
                     }
 

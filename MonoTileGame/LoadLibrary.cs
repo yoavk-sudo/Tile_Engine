@@ -33,6 +33,12 @@ namespace MonoTileGame
 
         private LoadLibrary()
         {
+           
+        }
+
+        public void Init(TileGame instance)
+        {
+            game = instance;
             Data = new Dictionary<string, Texture2D>
             {
                 { "Missing_Texture", game.Content.Load<Texture2D>("MissingTexture") }

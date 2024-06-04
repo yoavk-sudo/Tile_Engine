@@ -47,7 +47,13 @@ namespace Tile_Engine
 
         public IEnumerator<Tile> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Map.GetLength(0); i++)
+            {
+                for (int j = 0; j < Map.GetLength(1); j++)
+                {
+                    yield return Map[i, j];
+                }
+            }
         }
 
         public bool MoveNext()

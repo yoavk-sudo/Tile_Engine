@@ -10,6 +10,7 @@ namespace Tile_Engine
         public bool IsEmpty { get {  return TileObject == null; } }
         //public Actor Actor { get; set; }
         public IRenderable Texture { get; set; }
+        private ISprite Sprite;
 
         public override string ToString()
         {
@@ -21,7 +22,12 @@ namespace Tile_Engine
         {
             Position = position;
             Texture = texture;
-            Texture.Init(sprite);
+            Sprite = sprite;
+        }
+
+        public void InitTexture()
+        {
+            Texture.Init(Sprite);
         }
 
         public virtual void NewTileObject(TileObject tObject)

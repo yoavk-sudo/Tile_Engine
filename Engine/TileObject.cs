@@ -16,7 +16,9 @@ namespace Tile_Engine
         public Movement Movement { get; private set; }
         public Tile CurrentTile { get; set; }
         public IRenderable Texture { get; set; }
-        
+
+        private ISprite Sprite;
+
 
         public event Action OnMove;
 
@@ -55,6 +57,11 @@ namespace Tile_Engine
         {
             Name = name;
             Owner = owner;
+        }
+
+        public void InitTexture()
+        {
+            Texture.Init(Sprite);
         }
 
         public override string ToString()
