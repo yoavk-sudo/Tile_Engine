@@ -1,4 +1,4 @@
-﻿using MonoTileGame;
+﻿//using MonoTileGame;
 
-using var game = TileGame.Instance;
-game.Run();
+//using var game = TileGame.Instance;
+//game.Run();

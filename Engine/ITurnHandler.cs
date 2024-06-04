@@ -10,6 +10,6 @@ namespace Tile_Engine
     {
         public event Action NewTurn;
 
-        public void EndTurn();
+        public abstract void EndTurn();
     }
 }

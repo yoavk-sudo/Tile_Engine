@@ -31,7 +31,7 @@ namespace Tile_Engine
 
         public bool TryMove(Tile newTile)
         {
-            if (newTile == null || !Movement.GetPossibleMoves().Contains(newTile.Position)) return false;
+            //if (newTile == null || !Movement.GetPossibleMoves().Contains(newTile.Position)) return false;
 
             if (!CanMoveToTile(newTile)) 
                 return false;
