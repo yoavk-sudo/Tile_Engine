@@ -8,7 +8,7 @@ namespace MonoTileGame
 {
     public class TileGame : Game
     {
-        
+
         private Color BackgroundColor = Color.Black;
         private bool _UseBackground = false;
 
@@ -106,16 +106,16 @@ namespace MonoTileGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            
+
         }
 
         protected override void Update(GameTime gameTime)
         {
             MouseState inputData = Mouse.GetState();
 
-            if (inputData.X > TileSize* TileMap.Map.GetLength(0) || inputData.Y > TileSize * TileMap.Map.GetLength(1))
+            if (inputData.X > TileSize * TileMap.Map.GetLength(0) || inputData.Y > TileSize * TileMap.Map.GetLength(1))
             {
-                MousePressedOutsideOfTileMap.Invoke(inputData.X,inputData.Y);
+                MousePressedOutsideOfTileMap.Invoke(inputData.X, inputData.Y);
             }
             else
             {
@@ -151,7 +151,7 @@ namespace MonoTileGame
                 _spriteBatch.Draw(LoadLibrary.Instance.GetTexture("BackgroundTexture"), new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                 _spriteBatch.End();
             }
-            
+
         }
 
         protected void HandleTiles()
@@ -161,7 +161,7 @@ namespace MonoTileGame
             {
                 for (int y = 0; y < TileMap.Map.GetLength(1); y++)
                 {
-                    _spriteBatch.Draw(LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].Texture).sprite.Key),new Rectangle(x*TileSize,y*TileSize,(x+1)*TileSize,(y + 1) * TileSize), ((TileRenderer)TileMap.Map[x, y].Texture).tint);
+                    _spriteBatch.Draw(LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].Texture).sprite.Key), new Rectangle(x * TileSize, y * TileSize, (x + 1) * TileSize, (y + 1) * TileSize), ((TileRenderer)TileMap.Map[x, y].Texture).tint);
                 }
             }
             _spriteBatch.End();
@@ -177,11 +177,11 @@ namespace MonoTileGame
                     if (TileMap.Map[x, y].TileObject != null)
                     {
                         _spriteBatch.Draw(
-                            LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].TileObject.Texture).sprite.Key), 
+                            LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].TileObject.Texture).sprite.Key),
                             new Rectangle(x * TileSize, y * TileSize, (x + 1) * TileSize, (y + 1) * TileSize),
                             ((TileRenderer)TileMap.Map[x, y].TileObject.Texture).tint);
                     }
-                    
+
                 }
             }
             _spriteBatch.End();

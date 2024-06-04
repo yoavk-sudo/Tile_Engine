@@ -16,6 +16,8 @@ namespace Chess_Demo
 
         static void Main(string[] args)
         {
+            TileGame game = new TileGame(map);
+            game.Run();
             Console.WriteLine(map.Current);
             map.MoveNext(); 
             Console.WriteLine(map.Current);

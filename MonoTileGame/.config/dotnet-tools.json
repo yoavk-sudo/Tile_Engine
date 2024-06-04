@@ -15,22 +15,22 @@
       ]
     },
     "dotnet-mgcb-editor-linux": {
-        "version": "3.8.1.303",
-        "commands": [
-            "mgcb-editor-linux"
-        ]
+      "version": "3.8.1.303",
+      "commands": [
+        "mgcb-editor-linux"
+      ]
     },
     "dotnet-mgcb-editor-windows": {
-        "version": "3.8.1.303",
-        "commands": [
-            "mgcb-editor-windows"
-        ]
+      "version": "3.8.1.303",
+      "commands": [
+        "mgcb-editor-windows"
+      ]
     },
     "dotnet-mgcb-editor-mac": {
-        "version": "3.8.1.303",
-        "commands": [
-            "mgcb-editor-mac"
-        ]
+      "version": "3.8.1.303",
+      "commands": [
+        "mgcb-editor-mac"
+      ]
     }
   }
 }
