@@ -17,7 +17,7 @@ namespace Chess_Demo
         {
             NewTurn = StartTurn;
         }
-        public void EndTurn()
+        public override void EndTurn()
         {
 
             isTurnActive = false;
@@ -27,8 +27,6 @@ namespace Chess_Demo
         {
             isTurnActive=true;
         }
-
-
 
 
     }

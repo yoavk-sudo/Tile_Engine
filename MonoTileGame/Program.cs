@@ -1,4 +1,14 @@
 ﻿using MonoTileGame;
+using System;
+using Tile_Engine;
 
-//using var game = new MonoTileGame.TileGame();
-//game.Run();
+internal class Program
+{
+
+
+    static void Main(string[] args)
+    {
+
+
+    }
+}
