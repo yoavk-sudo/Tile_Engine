@@ -12,14 +12,14 @@ namespace Tile_Engine
     {
         public static Tile[,] Map { get; private set; }
         
-        public TileMap(int x, int y, IRenderable TileRenderer,ISprite DefaultSprite) 
+        public TileMap(int x, int y, ISprite DefaultSprite) 
         {
             Map = new Tile[x, y];
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
-                    Map[i, j] = new Tile(new Position(i, j), TileRenderer, DefaultSprite);
+                    Map[i, j] = new Tile(new Position(i, j), DefaultSprite);
                 }
             }
         }

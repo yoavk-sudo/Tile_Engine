@@ -22,13 +22,13 @@ namespace Tile_Engine
 
         public event Action OnMove;
 
-        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, IRenderable texture, ISprite sprite)
+        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, ISprite sprite)
         {
             Owner = owner;
             CurrentTile = currentTile;
             Movement = new Movement(this, movePatterns);
-            Texture = texture;
-            Texture.Init(sprite);
+            Sprite = sprite;
+            
         }
 
         public bool TryMove(Tile newTile)
@@ -59,8 +59,9 @@ namespace Tile_Engine
             Owner = owner;
         }
 
-        public void InitTexture()
+        public void InitTexture(IRenderable Renderer)
         {
+            Texture = Renderer;
             Texture.Init(Sprite);
         }
 

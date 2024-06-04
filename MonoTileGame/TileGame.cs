@@ -34,7 +34,7 @@ namespace MonoTileGame
         private TileMap _tileMap;
         private int TileSize;
 
-        public event Action<Tile> MousePressedOnTile = (t) => { return; };
+        public Action<Tile> MousePressedOnTile = (t) => { return; };
         public event Action<int, int> MousePressedOutsideOfTileMap = (t,s) => { return; };
 
         public TileGame(TileMap tileMap)
@@ -58,10 +58,10 @@ namespace MonoTileGame
             
             foreach (Tile T in _tileMap)
             {
-                T.InitTexture();
+                T.InitTexture(new TileRenderer());
                 if (!T.IsEmpty)
                 {
-                    T.TileObject.InitTexture();
+                    T.TileObject.InitTexture(new TileRenderer());
                 }
             }
         }
@@ -106,13 +106,22 @@ namespace MonoTileGame
                 MaxDepth = 1
             };
         }
+        
+        /*
+        public void Tint(Tile tile)
+        {
+            tile.Texture.Tint(new Object());
+        }
+
+        */
+
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             UpdateScreenScaleMatrix();
             TileSize = Math.Min((int)(_graphics.PreferredBackBufferWidth / TileMap.Map.GetLength(0)), (int)(_graphics.PreferredBackBufferHeight / TileMap.Map.GetLength(1)));
-            
+            //MousePressedOnTile += Tint;
             base.Initialize();
         }
 
@@ -126,15 +135,18 @@ namespace MonoTileGame
         protected override void Update(GameTime gameTime)
         {
             MouseState inputData = Mouse.GetState();
+            int updatedX = ((inputData.X - _viewport.X) * _resolutionWidth) / _virtualWidth;
+            int updatedY = ((inputData.Y - _viewport.Y) * _resolutionHeight) / _virtualHeight;
             if (inputData.LeftButton == ButtonState.Pressed)
             {
-                if (inputData.X > TileSize * TileMap.Map.GetLength(0) || inputData.Y > TileSize * TileMap.Map.GetLength(1))
+                if (updatedX > TileSize * TileMap.Map.GetLength(0) || updatedY > TileSize * TileMap.Map.GetLength(1) || updatedX < 0 || updatedY < 0)
                 {
-                    MousePressedOutsideOfTileMap.Invoke(inputData.X, inputData.Y);
+                    MousePressedOutsideOfTileMap.Invoke(updatedX, updatedY);
                 }
                 else
                 {
-                    MousePressedOnTile.Invoke(TileMap.Map[inputData.X / TileSize, inputData.Y / TileSize]);
+                    //TileMap.Map[inputData.X / TileSize, inputData.Y / TileSize].Texture.Tint(new Object());
+                    MousePressedOnTile.Invoke(TileMap.Map[updatedX / TileSize, updatedY / TileSize]);
                 }
             }
 

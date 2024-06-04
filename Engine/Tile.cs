@@ -18,15 +18,15 @@ namespace Tile_Engine
             return Position.ToString();
         }
 
-        public Tile(Position position, IRenderable texture, ISprite sprite)
+        public Tile(Position position, ISprite sprite)
         {
             Position = position;
-            Texture = texture;
             Sprite = sprite;
         }
 
-        public void InitTexture()
+        public void InitTexture(IRenderable Renderer)
         {
+            Texture = Renderer;
             Texture.Init(Sprite);
         }
 

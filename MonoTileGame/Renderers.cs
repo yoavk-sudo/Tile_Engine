@@ -39,11 +39,14 @@ namespace MonoTileGame
             tint = Color.White;
         }
 
-        public void Tint(object Color)
+        public void Tint(object color)
         {
-            try { tint = (Color)Color; }
-            catch { throw new InvalidCastException("Color Input must be an Xna Color"); }
+            //try { tint = (Color)color; }
+            //catch { throw new InvalidCastException("Color Input must be an Xna Color"); }
+
+            tint = Color.Aqua;
         }
+
 
  
     }
