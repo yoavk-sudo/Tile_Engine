@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tile_Engine
+﻿namespace Tile_Engine
 {
     public class Movement
     {
@@ -32,7 +26,8 @@ namespace Tile_Engine
 
         private IEnumerable<Position> GetAllPossibleMoves()
         {
-            throw new NotImplementedException();
+            //_owner.Position + 
+            return null;
         }
 
         private static Position MovePositionByMovement(MovementType movementType, Position newPosition)
@@ -60,6 +55,10 @@ namespace Tile_Engine
         public void RemoveMovePattern(MovePattern movePattern)
         {
             _movePatterns.Remove(movePattern);
+            MovementType m1 = MovementType.Forward;
+            MovementType m2 = MovementType.Forward;
+            MovementType[] ms = { m1, m2 };
+            MovePattern mp = new(ms,true);
         }
     }
 
@@ -78,8 +77,8 @@ namespace Tile_Engine
     public enum MovementType
     {
         Left,
-        Right,
         Forward,
+        Right,
         Back,
         ForwardRight,
         ForwardLeft,

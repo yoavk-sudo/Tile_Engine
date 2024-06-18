@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    public class Actor
+    public class Actor : IDestroyable
     {
         private static string _name;
 
         public string Name { get; } = _name;
-        public List<TileObject> TileObjects { get; protected set; } = new List<TileObject>();
+        public List<TileObject> TileObjects { get; private set; } = new List<TileObject>();
 
         public Actor(string actorName)
         {
@@ -30,6 +30,20 @@ namespace Tile_Engine
             catch (ArgumentOutOfRangeException)
             {
                 return false;
+            }
+        }
+
+        public void Destroy()
+        {
+            _name = null;
+            TileObjects = null;
+        }
+
+        public void DestroyChildren()
+        {
+            foreach (TileObject tileObject in TileObjects)
+            {
+                tileObject.Destroy();
             }
         }
     }
