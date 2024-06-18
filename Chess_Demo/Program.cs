@@ -17,6 +17,10 @@ namespace Chess_Demo
         static void Main(string[] args)
         {
             TileGame game = new TileGame(map);
+            foreach (var tile in map)
+            {
+                
+            }
             game.MousePressedOnTile += Tint;
             game.Run();
             
