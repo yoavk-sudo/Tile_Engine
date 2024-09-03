@@ -1,4 +1,6 @@
-﻿namespace Tile_Engine
+﻿using System.Collections.Generic;
+
+namespace Tile_Engine
 {
     public class Movement
     {
@@ -26,24 +28,60 @@
 
         private IEnumerable<Position> GetAllPossibleMoves()
         {
-            //_owner.Position + 
+            var possibleMoves = new List<Position>();
+            foreach (var movePattern in _movePatterns)
+            {
+                foreach (var movement in movePattern.Movements)
+                {
+                    Position newPosition = MovePositionByMovement(movement, _owner.Position);
+                    if (TileMap.IsTileEmpty(newPosition))
+                    {
+                        // show as empty, let client decide what to do with this
+                    }
+                    else if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
+                    {
+                        // show as OOB, let client decide what to do with this
+                    }
+                    else
+                    {
+                        // show as occupied, let client decide what to do with this
+                    }
+                }
+            }
             return null;
         }
 
         private static Position MovePositionByMovement(MovementType movementType, Position newPosition)
         {
-            newPosition += movementType switch
+            switch (movementType)
             {
-                MovementType.Left => new Position(-1, 0),
-                MovementType.Right => new Position(1, 0),
-                MovementType.Forward => new Position(0, -1),
-                MovementType.Back => new Position(0, 1),
-                MovementType.ForwardRight => new Position(1, -1),
-                MovementType.ForwardLeft => new Position(-1, -1),
-                MovementType.BackRight => new Position(1, 1),
-                MovementType.BackLeft => new Position(-1, 1)
-            };;
-
+                case MovementType.Left:
+                    newPosition += new Position(-1, 0);
+                    break;
+                case MovementType.Up:
+                    newPosition += new Position(1, 0);
+                    break;
+                case MovementType.Right:
+                    newPosition += new Position(0, 1);
+                    break;
+                case MovementType.Down:
+                    newPosition += new Position(0, -1);
+                    break;
+                case MovementType.UpLeft:
+                    newPosition += new Position(-1, 1);
+                    break;
+                case MovementType.UpRight:
+                    newPosition += new Position(1, 1);
+                    break;
+                case MovementType.DownLeft:
+                    newPosition += new Position(-1, -1);
+                    break;
+                case MovementType.DownRight:
+                    newPosition += new Position(1, -1);
+                    break;
+                default:
+                    break;
+            }
             return newPosition;
         }
 
@@ -55,8 +93,8 @@
         public void RemoveMovePattern(MovePattern movePattern)
         {
             _movePatterns.Remove(movePattern);
-            MovementType m1 = MovementType.Forward;
-            MovementType m2 = MovementType.Forward;
+            MovementType m1 = MovementType.Up;
+            MovementType m2 = MovementType.Up;
             MovementType[] ms = { m1, m2 };
             MovePattern mp = new(ms,true);
         }
@@ -65,24 +103,24 @@
     public readonly struct MovePattern
     {
         public MovementType[] Movements { get; }
-        public bool IsDirection { get; }
+        public bool IsDirectional { get; }
 
-        public MovePattern(MovementType[] movements, bool isDirection)
+        public MovePattern(MovementType[] movements, bool isDirectional = false)
         {
             Movements = movements;
-            IsDirection = isDirection;
+            IsDirectional = isDirectional;
         }
     }
 
     public enum MovementType
     {
         Left,
-        Forward,
+        Up,
         Right,
-        Back,
-        ForwardRight,
-        ForwardLeft,
-        BackRight,
-        BackLeft
+        Down,
+        UpLeft,
+        UpRight,
+        DownLeft,
+        DownRight
     }
 }

@@ -30,25 +30,26 @@ namespace Tile_Engine
 
         public bool TryMove(Tile newTile)
         {
-            if (newTile == null || !TileObjectMovement.GetPossibleMoves().Contains(newTile.Position)) 
-                return false;
+            //if (newTile == null || !TileObjectMovement.GetPossibleMoves().Contains(newTile.Position)) 
+            //    return false;
 
-            if (!CanMoveToTile(newTile)) 
-                return false;
-            CurrentTile.TileObject = null;
-            OnMoveCallback(newTile);
-            OnMove.Invoke();
-            newTile.NewTileObject(this);
-            CurrentTile = newTile;
+            //if (!CanMoveToTile(newTile)) 
+            //    return false;
+            //CurrentTile.TileObject = null;
+            //OnMoveCallback(newTile);
+            //OnMove.Invoke();
+            //newTile.NewTileObject(this);
+            //CurrentTile = newTile;
             return true;
         }
         public  void OnMoveCallback(Tile newTile)
         {
 
         }
-        public void Move()
+        public void Move(Position newPosition)
         {
-            
+            CurrentTile = TileMap.Map[newPosition.X, newPosition.Y];
+            OnMove.Invoke(); // update renderer, let client code decide what to do on new tile and its object
         }
         protected abstract bool CanMoveToTile(Tile newTile);
 
