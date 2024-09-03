@@ -10,17 +10,17 @@ namespace Chess_Demo
     {
         static Sprite sprite = new("a", "ball");
         private const int PAWN_AMOUNT = 16;
+        
 
        // public static List<MovableTileObject> Pawns { get; private set; } = new List<MovableTileObject>();
-            static TileMap map = new(10, 10, sprite);
+            static TileMap map = new(8, 8, sprite);
 
         static void Main(string[] args)
         {
             TileGame game = new TileGame(map);
-            foreach (var tile in map)
-            {
-                
-            }
+            SpriteLoader spriteManager = new();
+            spriteManager.SetMapBackground(map);
+
             game.MousePressedOnTile += Tint;
             game.Run();
             
@@ -34,11 +34,7 @@ namespace Chess_Demo
             //{
             //    //Pawns.Add((MovableTileObject)pawn.Clone());
             //}
-            var keyInfo = Console.ReadKey();
-            while (keyInfo.Key != ConsoleKey.W)
-            {
-                keyInfo = Console.ReadKey();
-            }
+            
         }
 
 

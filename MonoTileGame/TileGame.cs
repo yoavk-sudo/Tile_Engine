@@ -125,6 +125,7 @@ namespace MonoTileGame
             // TODO: Add your initialization logic here
             UpdateScreenScaleMatrix();
             TileSize = Math.Min((int)(_graphics.PreferredBackBufferWidth / TileMap.Map.GetLength(0)), (int)(_graphics.PreferredBackBufferHeight / TileMap.Map.GetLength(1)));
+            CommandLineTrigger += Close;
             //MousePressedOnTile += Tint;
             base.Initialize();
         }
@@ -339,7 +340,13 @@ namespace MonoTileGame
             _UseBackground = UseSprite;
         }
 
-
+        private void Close(String Input)
+        {
+            if (Input == "Close" || Input == "Exit")
+            {
+                this.Exit();
+            }
+        }
     }
 }
 
