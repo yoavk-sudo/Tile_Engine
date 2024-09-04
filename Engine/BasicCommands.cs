@@ -31,7 +31,7 @@ namespace Tile_Engine
             OnHelp += HelpPrint;
             OnSelect += Select;
             OnDeselect += Deselect;
-            OnMove += Move;
+            //OnMove += Move;
             AddBasicCommands();
         }
 
@@ -78,13 +78,14 @@ namespace Tile_Engine
         {
             _selectedObject = null;
         }
-        void Move()
+        void Move(Position newPosition)
         {
-            if(_selectedObject == null )
+            if(_selectedObject == null)
             {
                 Console.WriteLine("Select a tile with an object in it");
                 return;
             }
+            _selectedObject.Move(newPosition);
         }
     }
 }

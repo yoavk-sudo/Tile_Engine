@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Tile_Engine;
 
 using MonoTileGame;
+using Renderer;
 
 namespace Chess_Demo
 {
@@ -39,6 +40,12 @@ namespace Chess_Demo
             {
                 keyInfo = Console.ReadKey();
             }
+            Actor white = new("white");
+            ISprite sprite;
+            List<MovePattern> patterns = new List<MovePattern>();
+            TileObject knight = new(TileMap.Map[0,0], patterns, white, sprite, true, true);
+            knight.Move(new Position(1, 1));
+            Console.WriteLine("Knight's new position is: " + knight.CurrentTile);
         }
 
 

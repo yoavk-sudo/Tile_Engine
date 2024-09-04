@@ -8,7 +8,7 @@ namespace Tile_Engine
         private List<MovePattern> _movePatterns;
         public MovePattern[] MovePatterns => _movePatterns.ToArray();
 
-        public event Action TriggerMove;
+        public event Action<Position> TriggerMove;
 
         public Movement(TileObject owner, List<MovePattern> movePatterns)
         {
@@ -20,15 +20,16 @@ namespace Tile_Engine
         public bool TryMoveTileObject(TileObject tObject, Position targetPosition)
         {
             if(tObject == null 
-                || !GetAllPossibleMoves().Contains(targetPosition)) 
+                || !GetAllPossibleMoves().Item1.Contains(targetPosition)) 
                 return false;
-            TriggerMove.Invoke();
+            TriggerMove.Invoke(targetPosition);
             return true;
         }
 
-        private IEnumerable<Position> GetAllPossibleMoves()
+        private (IEnumerable<Position>, IEnumerable<Position>) GetAllPossibleMoves()
         {
-            var possibleMoves = new List<Position>();
+            var viableMoves = new List<Position>();
+            var nonViableMoves = new List<Position>();
             foreach (var movePattern in _movePatterns)
             {
                 foreach (var movement in movePattern.Movements)
@@ -36,19 +37,34 @@ namespace Tile_Engine
                     Position newPosition = MovePositionByMovement(movement, _owner.Position);
                     if (TileMap.IsTileEmpty(newPosition))
                     {
-                        // show as empty, let client decide what to do with this
+                        if(_owner.CanMoveIntoEmpty()) viableMoves.Add(newPosition);
+                        else nonViableMoves.Add(newPosition);
                     }
                     else if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
                     {
-                        // show as OOB, let client decide what to do with this
+                        if(TileMap.Map[newPosition.X, newPosition.Y].TileObject.Owner == _owner.Owner)
+                        {
+                            if(_owner.CanMoveIntoAlly()) viableMoves.Add(newPosition);
+                            else nonViableMoves.Add(newPosition);
+                        }
+                        else
+                        {
+                            if(_owner.CanMoveIntoEnemy()) viableMoves.Add(newPosition);
+                            else nonViableMoves.Add(newPosition);
+                        }
                     }
                     else
                     {
-                        // show as occupied, let client decide what to do with this
+                        if(_owner.CanMoveOOB())
+                        {
+                            viableMoves.Add(newPosition);
+                            continue;
+                        }
+                        nonViableMoves.Add(newPosition);
                     }
                 }
             }
-            return null;
+            return (viableMoves, nonViableMoves);
         }
 
         private static Position MovePositionByMovement(MovementType movementType, Position newPosition)

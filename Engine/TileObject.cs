@@ -8,9 +8,11 @@ using Renderer;
 
 namespace Tile_Engine
 {
-    public abstract class TileObject : ICloneable, IDestroyable
+    public class TileObject : ICloneable, IDestroyable
     {
         private ISprite _sprite;
+        private Dictionary<string, bool> _specialRules = new Dictionary<string, bool>();
+
         public string Name { get; set; }
         public Position Position => CurrentTile.Position;
         public Actor Owner { get; }
@@ -20,28 +22,49 @@ namespace Tile_Engine
 
         public event Action OnMove;
 
-        protected TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, ISprite sprite)
+        public TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, ISprite sprite, 
+            bool canMoveIntoAlly, bool canMoveIntoEnemy, bool canMoveIntoEmpty = true, bool canMoveOutOfBounds = false)
         {
             Owner = owner;
             CurrentTile = currentTile;
             TileObjectMovement = new Movement(this, movePatterns);
             _sprite = sprite;
+            InitializeSpecialRules(canMoveIntoEmpty, canMoveIntoAlly, canMoveIntoEnemy, canMoveOutOfBounds);
         }
 
-        public bool TryMove(Tile newTile)
+        private void InitializeSpecialRules(bool canMoveIntoEmpty, bool canMoveIntoAlly, bool canMoveIntoEnemy, bool canMoveOutOfBounds)
         {
-            //if (newTile == null || !TileObjectMovement.GetPossibleMoves().Contains(newTile.Position)) 
-            //    return false;
-
-            //if (!CanMoveToTile(newTile)) 
-            //    return false;
-            //CurrentTile.TileObject = null;
-            //OnMoveCallback(newTile);
-            //OnMove.Invoke();
-            //newTile.NewTileObject(this);
-            //CurrentTile = newTile;
-            return true;
+            _specialRules.Add("CanMoveIntoEmpty", canMoveIntoEmpty);
+            _specialRules.Add("CanMoveIntoAlly", canMoveIntoAlly);
+            _specialRules.Add("CanMoveIntoEnemy", canMoveIntoEnemy);
+            _specialRules.Add("CanMoveOutOfBounds", canMoveOutOfBounds);
         }
+
+        public bool CanMoveIntoEmpty()
+        {
+            bool able = false;
+            _specialRules.TryGetValue("canMoveIntoEmpty", out able);
+            return able;
+        }
+        public bool CanMoveIntoAlly()
+        {
+            bool able = false;
+            _specialRules.TryGetValue("CanMoveIntoAlly", out able);
+            return able;
+        }
+        public bool CanMoveIntoEnemy()
+        {
+            bool able = false;
+            _specialRules.TryGetValue("CanMoveIntoEnemy", out able);
+            return able;
+        }
+        public bool CanMoveOOB()
+        {
+            bool able = false;
+            _specialRules.TryGetValue("CanMoveOutOfBounds", out able);
+            return able;
+        }
+
         public  void OnMoveCallback(Tile newTile)
         {
 
@@ -51,7 +74,7 @@ namespace Tile_Engine
             CurrentTile = TileMap.Map[newPosition.X, newPosition.Y];
             OnMove.Invoke(); // update renderer, let client code decide what to do on new tile and its object
         }
-        protected abstract bool CanMoveToTile(Tile newTile);
+        //protected abstract bool CanMoveToTile(Tile newTile);
 
         public TileObject(string name, Actor owner) 
         {
@@ -69,7 +92,10 @@ namespace Tile_Engine
         {
             return Name;
         }
-        public abstract object Clone();
+        public object Clone()
+        {
+            return new TileObject(Name, Owner);
+        }
 
         public void Destroy()
         {
