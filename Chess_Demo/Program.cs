@@ -35,7 +35,7 @@ namespace Chess_Demo
             //    //Pawns.Add((MovableTileObject)pawn.Clone());
             //}
             Pawn p = new();
-            
+                        
         }
 
 

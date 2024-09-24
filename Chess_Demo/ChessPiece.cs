@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tile_Engine
 {
-    public abstract class ChessPiece
+    internal abstract class ChessPiece
     {
         protected List<MovePattern> MovePatterns = new();
         public TileObject CreateTileObject(Tile tile, Actor owner, ISprite sprite)

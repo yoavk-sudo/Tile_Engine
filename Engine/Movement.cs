@@ -135,12 +135,13 @@ namespace Tile_Engine
     public readonly struct MovePattern
     {
         public MovementDirections[] Movements { get; }
+        public int RepeatedMoves { get; }
         public MoveConditions? Conditions { get; }
-
-        public MovePattern(MovementDirections[] movements, MoveConditions? conditions = null)
+        public MovePattern(MovementDirections[] movements, MoveConditions? conditions = null, int repeatedMoves = 1)
         {
             Movements = movements;
             Conditions = conditions;
+            RepeatedMoves = repeatedMoves;
         }
     }
 
