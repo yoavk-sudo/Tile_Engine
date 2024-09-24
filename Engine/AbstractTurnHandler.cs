@@ -8,7 +8,9 @@ namespace Tile_Engine
 {
     public abstract class AbstractTurnHandler
     {
-        public event Action NewTurn;
+        public abstract event Action NewTurn;
+
+        public abstract event Action EndOfTurn;
 
         public abstract void EndTurn();
     }
