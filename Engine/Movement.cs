@@ -37,7 +37,10 @@ namespace Tile_Engine
                     Position newPosition = MovePositionByMovement(movement, _owner.Position);
                     if (TileMap.IsTileEmpty(newPosition))
                     {
-                        if(_owner.CanMoveIntoEmpty()) viableMoves.Add(newPosition);
+                        if (_owner.CanMoveIntoEmpty())
+                        {
+                            viableMoves.Add(newPosition);
+                        }
                         else nonViableMoves.Add(newPosition);
                     }
                     else if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
@@ -67,32 +70,32 @@ namespace Tile_Engine
             return (viableMoves, nonViableMoves);
         }
 
-        private static Position MovePositionByMovement(MovementType movementType, Position newPosition)
+        private static Position MovePositionByMovement(MovementDirections movementType, Position newPosition)
         {
             switch (movementType)
             {
-                case MovementType.Left:
+                case MovementDirections.Left:
                     newPosition += new Position(-1, 0);
                     break;
-                case MovementType.Up:
+                case MovementDirections.Up:
                     newPosition += new Position(1, 0);
                     break;
-                case MovementType.Right:
+                case MovementDirections.Right:
                     newPosition += new Position(0, 1);
                     break;
-                case MovementType.Down:
+                case MovementDirections.Down:
                     newPosition += new Position(0, -1);
                     break;
-                case MovementType.UpLeft:
+                case MovementDirections.UpLeft:
                     newPosition += new Position(-1, 1);
                     break;
-                case MovementType.UpRight:
+                case MovementDirections.UpRight:
                     newPosition += new Position(1, 1);
                     break;
-                case MovementType.DownLeft:
+                case MovementDirections.DownLeft:
                     newPosition += new Position(-1, -1);
                     break;
-                case MovementType.DownRight:
+                case MovementDirections.DownRight:
                     newPosition += new Position(1, -1);
                     break;
                 default:
@@ -109,26 +112,26 @@ namespace Tile_Engine
         public void RemoveMovePattern(MovePattern movePattern)
         {
             _movePatterns.Remove(movePattern);
-            MovementType m1 = MovementType.Up;
-            MovementType m2 = MovementType.Up;
-            MovementType[] ms = { m1, m2 };
+            MovementDirections m1 = MovementDirections.Up;
+            MovementDirections m2 = MovementDirections.Up;
+            MovementDirections[] ms = { m1, m2 };
             MovePattern mp = new(ms,true);
         }
     }
 
     public readonly struct MovePattern
     {
-        public MovementType[] Movements { get; }
+        public MovementDirections[] Movements { get; }
         public bool IsDirectional { get; }
 
-        public MovePattern(MovementType[] movements, bool isDirectional = false)
+        public MovePattern(MovementDirections[] movements, bool isDirectional = false)
         {
             Movements = movements;
             IsDirectional = isDirectional;
         }
     }
 
-    public enum MovementType
+    public enum MovementDirections
     {
         Left,
         Up,
