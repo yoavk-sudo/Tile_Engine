@@ -90,8 +90,16 @@ namespace Tile_Engine
         }
         //protected abstract bool CanMoveToTile(Tile newTile);
 
-        public TileObject(string name, Actor owner) 
+        private TileObject(string name, Actor owner) 
         {
+            Name = name;
+            Owner = owner;
+        }
+        private TileObject(string name, Actor owner, Position position) 
+        {
+            if (!TileMap.Map.IsWithinBounds(position.X, position.Y))
+                return;
+            CurrentTile = TileMap.Map[position.X, position.Y];
             Name = name;
             Owner = owner;
         }
@@ -109,6 +117,10 @@ namespace Tile_Engine
         public object Clone()
         {
             return new TileObject(Name, Owner);
+        }
+        public object Clone(Position newPosition)
+        {
+            return new TileObject(Name, Owner, newPosition);
         }
 
         public void Destroy()
