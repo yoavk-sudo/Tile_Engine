@@ -54,7 +54,7 @@ namespace MonoTileGame
             CurrentTextPosition = new Vector2(position.X + 20, position.Y + _CursorHeight/2);
             CurrentText = Text;
             Selected = false;
-            CursorPosition = new Vector2(CursorPosition.X + (_font.MeasureString(CurrentText)).X*2, CursorPosition.Y);
+            CursorPosition = new Vector2(CursorPosition.X + (_font.MeasureString(CurrentText)).X, CursorPosition.Y);
             
         }
 
@@ -96,7 +96,7 @@ namespace MonoTileGame
                     }
 
                     CurrentText += text;
-                    spacing = _font.MeasureString(text.ToString())*2;
+                    spacing = _font.MeasureString(text.ToString());
                     CursorPosition = new Vector2(CursorPosition.X + spacing.X,CursorPosition.Y);
                 }
             }
@@ -104,7 +104,7 @@ namespace MonoTileGame
             { 
                 if (CurrentText.Length >0)
                 {
-                    spacing = _font.MeasureString(CurrentText.Substring(CurrentText.Length-1))*2;
+                    spacing = _font.MeasureString(CurrentText.Substring(CurrentText.Length - 1));
 
                     CurrentText = CurrentText.Remove(CurrentText.Length - 1, 1);
                     CursorPosition = new Vector2(CursorPosition.X-spacing.X,CursorPosition.Y);
@@ -127,8 +127,8 @@ namespace MonoTileGame
                 output = text.Substring(_length);
             }
 
-            CursorPosition = new Vector2(CursorPosition.X - (_font.MeasureString(CurrentText)).X * 2, CursorPosition.Y);
-            CursorPosition = new Vector2(CursorPosition.X + (_font.MeasureString(text)).X * 2, CursorPosition.Y);
+            CursorPosition = new Vector2(CursorPosition.X - (_font.MeasureString(CurrentText)).X, CursorPosition.Y);
+            CursorPosition = new Vector2(CursorPosition.X + (_font.MeasureString(text)).X, CursorPosition.Y);
             CurrentText = substring;
             return output;
         }
@@ -138,7 +138,7 @@ namespace MonoTileGame
             if (Visible)
             {
                 spriteBatch.Draw(_texture,new Rectangle((int)Position.X,(int)Position.Y, CellWidth,CellHeight),Color.White);
-                spriteBatch.DrawString(_font, CurrentText, CurrentTextPosition, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, LayerDepth);
+                spriteBatch.DrawString(_font, CurrentText, CurrentTextPosition, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth);
 
                 if(Selected && IsFlashingCursotVisible())
                 {

@@ -142,8 +142,8 @@ namespace MonoTileGame
             int bufferWidth = 30;
 
             inputBox = new TextBox(LoadLibrary.Instance.GetTexture("inputBackground"), LoadLibrary.Instance.GetTexture("TextCursor"),
-                                            new Point(_resolutionWidth - TileSize * TileMap.Map.GetLength(0) - 2 * bufferWidth, 50),
-                                            new Point(5, 30), new Vector2(TileMap.Map.GetLength(0) * TileSize + bufferWidth, _resolutionHeight - 100),
+                                            new Point(_resolutionWidth - TileSize * TileMap.Map.GetLength(0) - 2 * bufferWidth, 75),
+                                            new Point(5, 40), new Vector2(TileMap.Map.GetLength(0) * TileSize + bufferWidth, _resolutionHeight - 100),
                                             100, true, true, font, 0, Text: "i have starting text");
             
             _logger = new Logger((int)inputBox.Position.X, (int)inputBox.Position.Y,inputBox.CellWidth,inputBox.CellHeight,bufferWidth,font,100);
