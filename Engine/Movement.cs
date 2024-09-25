@@ -52,35 +52,48 @@ namespace Tile_Engine
                 foreach (var movement in movePattern.Movements)
                 {
                     Position newPosition = MovePositionByMovement(movement, _owner.Position);
-                    if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y) && TileMap.IsTileEmpty(newPosition))
+                    for (int i = 0; i < movePattern.RepeatedMoves; i++)
                     {
-                        if (_owner.CanMoveIntoEmpty())
+                        if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y) && TileMap.IsTileEmpty(newPosition))
                         {
-                            viableMoves.Add(newPosition);
+                            if (_owner.CanMoveIntoEmpty())
+                            {
+                                viableMoves.Add(newPosition);
+                            }
+                            else
+                            {
+                                nonViableMoves.Add(newPosition);
+                                break;
+                            }
                         }
-                        else nonViableMoves.Add(newPosition);
-                    }
-                    else if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
-                    {
-                        if (TileMap.Map[newPosition.X, newPosition.Y].TileObject.Owner == _owner.Owner)
+                        else if (TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
                         {
-                            if (_owner.CanMoveIntoAlly()) viableMoves.Add(newPosition);
-                            else nonViableMoves.Add(newPosition);
+                            if (TileMap.Map[newPosition.X, newPosition.Y].TileObject.Owner == _owner.Owner)
+                            {
+                                if (_owner.CanMoveIntoAlly()) viableMoves.Add(newPosition);
+                                else nonViableMoves.Add(newPosition);
+                            }
+                            else
+                            {
+                                if (_owner.CanMoveIntoEnemy()) viableMoves.Add(newPosition);
+                                else
+                                {
+                                    nonViableMoves.Add(newPosition);
+                                    break;
+                                }
+                            }
                         }
                         else
                         {
-                            if (_owner.CanMoveIntoEnemy()) viableMoves.Add(newPosition);
-                            else nonViableMoves.Add(newPosition);
+                            if (_owner.CanMoveOOB())
+                            {
+                                viableMoves.Add(newPosition);
+                                continue;
+                            }
+                            nonViableMoves.Add(newPosition);
+                            break;
                         }
-                    }
-                    else
-                    {
-                        if (_owner.CanMoveOOB())
-                        {
-                            viableMoves.Add(newPosition);
-                            continue;
-                        }
-                        nonViableMoves.Add(newPosition);
+                        newPosition = MovePositionByMovement(movement, _owner.Position);
                     }
                 }
             }
