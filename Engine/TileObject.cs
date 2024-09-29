@@ -136,6 +136,10 @@ namespace Tile_Engine
         {
             return new TileObject(Name, Owner, newPosition);
         }
+        public TileObject CloneTO(Position newPosition)
+        {
+            return (TileObject)Clone(newPosition);
+        }
 
         public void Destroy()
         {

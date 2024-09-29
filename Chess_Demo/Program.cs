@@ -32,6 +32,7 @@ namespace Chess_Demo
             {
                 pawnObject.Clone(new Position(i, 1));
             }
+            pawnObject.Destroy();
             game.MousePressedOnTile += Tint;
             game.Run();
             
