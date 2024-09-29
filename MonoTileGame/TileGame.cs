@@ -317,6 +317,8 @@ namespace MonoTileGame
                 {
                     if (TileMap.Map[x, y].TileObject != null)
                     {
+                        if (TileMap.Map[x, y].TileObject.Texture == null) TileMap.Map[x, y].TileObject.InitTexture(new TileRenderer());
+                        Console.WriteLine(TileMap.Map[x, y].TileObject);
                         _spriteBatch.Draw(
                             LoadLibrary.Instance.GetTexture(((TileRenderer)TileMap.Map[x, y].TileObject.Texture).sprite.Key),
                             new Rectangle(x * TileSize, y * TileSize, TileSize, TileSize),

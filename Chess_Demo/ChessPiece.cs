@@ -12,9 +12,10 @@ namespace Tile_Engine
         protected List<MovePattern> MovePatterns = new();
         public TileObject CreateTileObject(Tile tile, Actor owner, ISprite sprite)
         {
-            TileObject to = new(tile, MovePatterns, owner, false, true);
             CreateMovePatterns();
-            foreach (var mp in MovePatterns)
+            TileObject to = new(tile, MovePatterns, owner, sprite, false, true);
+            var patternsCopy = new List<MovePattern>(MovePatterns);
+            foreach (var mp in patternsCopy)
             {
                 to.TileObjectMovement.AddMovePattern(mp);
             }

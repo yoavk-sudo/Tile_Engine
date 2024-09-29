@@ -37,6 +37,7 @@ namespace Tile_Engine
             TileObjectMovement = new Movement(this, movePatterns);
             _sprite = sprite;
             InitializeSpecialRules(canMoveIntoEmpty, canMoveIntoAlly, canMoveIntoEnemy, canMoveOutOfBounds);
+            CurrentTile.NewTileObject(this);
         }
         public TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, 
             bool canMoveIntoAlly, bool canMoveIntoEnemy, bool canMoveIntoEmpty = true, bool canMoveOutOfBounds = false)
@@ -45,6 +46,7 @@ namespace Tile_Engine
             CurrentTile = currentTile;
             TileObjectMovement = new Movement(this, movePatterns);
             InitializeSpecialRules(canMoveIntoEmpty, canMoveIntoAlly, canMoveIntoEnemy, canMoveOutOfBounds);
+            CurrentTile.NewTileObject(this);
         }
 
         private void InitializeSpecialRules(bool canMoveIntoEmpty, bool canMoveIntoAlly, bool canMoveIntoEnemy, bool canMoveOutOfBounds)
@@ -133,6 +135,10 @@ namespace Tile_Engine
         public object Clone(Position newPosition)
         {
             return new TileObject(Name, Owner, newPosition);
+        }
+        public TileObject CloneTO(Position newPosition)
+        {
+            return (TileObject)Clone(newPosition);
         }
 
         public void Destroy()
