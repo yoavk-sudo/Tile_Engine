@@ -21,20 +21,20 @@ namespace Chess_Demo
             TileGame game = new TileGame(map);
             SpriteLoader spriteManager = new();
             Sprite pSprite = spriteManager.WhiteUnits[0]; 
-            spriteManager.SetMapBackground(map);
             Actor white = new("White");
             Actor black = new("Black");
-            WhitePawn p = new();
-            TileObject pawnObject = p.CreateTileObject(TileMap.Map[0, 0], white, pSprite);
-            for (int i = 0; i < map.Count(); i++)
-            {
-                pawnObject.Clone(new Position(i, 1));
-            }
-            pawnObject.Destroy();
+            spriteManager.SetMapBackground(map);
+            //pawnObject.Destroy();
 
             game.MousePressedOnTile += Tint;
             game.Run();
             
+            WhitePawn p = new();
+            TileObject pawnObject = p.CreateTileObject(map.GetMap()[0, 0], white, pSprite);
+            for (int i = 0; i < map.Count(); i++)
+            {
+                pawnObject.Clone(new Position(i, 1));
+            }
 
             Console.WriteLine(map.Current);
             map.MoveNext(); 

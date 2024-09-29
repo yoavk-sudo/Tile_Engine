@@ -117,6 +117,11 @@ namespace Tile_Engine
         }
         #endregion
 
+        public Tile[,] GetMap()
+        {
+            return Map;
+        }
+
         public static bool IsTileEmpty(Position pos)
         {
             if (Map == null)
