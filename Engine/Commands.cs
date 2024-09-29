@@ -35,6 +35,28 @@ namespace Tile_Engine
             CommandDescriptions.Add(commandName, description);
         }
 
+        public static void SubscribeToCommand(string commandName, Action action)
+        {
+            CommandFunctions[commandName] += action;
+        }
+
+        public static void SubscribeToCommand(string commandName, Action<object> action)
+        {
+            CommandFunctionsWithInput[commandName] += action;
+        }
+
+        public static void UnsubscribeFromCommand(string commandName, Action<object> action)
+        {
+            CommandFunctionsWithInput[commandName] -= action;
+        }
+
+        public static void UnsubscribeFromCommand(string commandName, Action action)
+        {
+            CommandFunctions[commandName] -= action;
+        }
+
+
+
         public static void ExecuteCommand(string commandName)
         {
             commandName = commandName.TrimAndDecapitalize();
