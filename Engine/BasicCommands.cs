@@ -92,7 +92,7 @@ namespace Tile_Engine
                 _selectedObject.Move(newPosition);
             }
             catch{
-                throw new InvalidCastException("object was not a position");
+                throw new InvalidCastException("move input was not a position");
             }
         }
     }
