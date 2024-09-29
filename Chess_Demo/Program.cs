@@ -26,15 +26,15 @@ namespace Chess_Demo
             spriteManager.SetMapBackground(map);
             //pawnObject.Destroy();
 
-            game.MousePressedOnTile += Tint;
-            game.Run();
-            
             WhitePawn p = new();
             TileObject pawnObject = p.CreateTileObject(map.GetMap()[0, 0], white, pSprite);
             for (int i = 0; i < map.Count(); i++)
             {
                 pawnObject.Clone(new Position(i, 1));
             }
+            game.MousePressedOnTile += Tint;
+            game.Run();
+            
 
             Console.WriteLine(map.Current);
             map.MoveNext(); 

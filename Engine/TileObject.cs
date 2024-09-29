@@ -37,6 +37,7 @@ namespace Tile_Engine
             TileObjectMovement = new Movement(this, movePatterns);
             _sprite = sprite;
             InitializeSpecialRules(canMoveIntoEmpty, canMoveIntoAlly, canMoveIntoEnemy, canMoveOutOfBounds);
+            CurrentTile.NewTileObject(this);
         }
         public TileObject(Tile currentTile, List<MovePattern> movePatterns, Actor owner, 
             bool canMoveIntoAlly, bool canMoveIntoEnemy, bool canMoveIntoEmpty = true, bool canMoveOutOfBounds = false)
