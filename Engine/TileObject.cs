@@ -134,7 +134,8 @@ namespace Tile_Engine
         }
         public object Clone(Position newPosition)
         {
-            return new TileObject(Name, Owner, newPosition);
+            return new TileObject(CurrentTile, TileObjectMovement.MovePatterns.ToList(), Owner, _sprite, 
+                CanMoveIntoAlly(), CanMoveIntoEnemy(), CanMoveIntoEmpty(), CanMoveOOB());        
         }
         public TileObject CloneTO(Position newPosition)
         {

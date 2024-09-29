@@ -23,16 +23,18 @@ namespace Chess_Demo
             Sprite pSprite = spriteManager.WhiteUnits[0]; 
             Actor white = new("White");
             Actor black = new("Black");
-            spriteManager.SetMapBackground(map);
             //pawnObject.Destroy();
 
             WhitePawn p = new();
             TileObject pawnObject = p.CreateTileObject(map.GetMap()[0, 0], white, pSprite);
+            pawnObject.InitTexture(new TileRenderer());
             for (int i = 0; i < map.Count(); i++)
             {
-                pawnObject.Clone(new Position(i, 1));
+                TileObject cTO = pawnObject.CloneTO(new Position(i, 1));
+                cTO.InitTexture(new TileRenderer());
             }
             //pawnObject.Destroy();
+            spriteManager.SetMapBackground(map);
             game.MousePressedOnTile += Tint;
             game.Run();
             
