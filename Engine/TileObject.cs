@@ -132,14 +132,14 @@ namespace Tile_Engine
         {
             return new TileObject(Name, Owner);
         }
-        public object Clone(Position newPosition)
+        public object Clone(Tile newTile)
         {
-            return new TileObject(CurrentTile, TileObjectMovement.MovePatterns.ToList(), Owner, _sprite, 
+            return new TileObject(newTile, TileObjectMovement.MovePatterns.ToList(), Owner, _sprite, 
                 CanMoveIntoAlly(), CanMoveIntoEnemy(), CanMoveIntoEmpty(), CanMoveOOB());        
         }
-        public TileObject CloneTO(Position newPosition)
+        public TileObject CloneTO(Tile newTile)
         {
-            return (TileObject)Clone(newPosition);
+            return (TileObject)Clone(newTile);
         }
 
         public void Destroy()
