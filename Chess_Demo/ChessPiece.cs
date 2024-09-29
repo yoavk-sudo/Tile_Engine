@@ -13,7 +13,7 @@ namespace Tile_Engine
         public TileObject CreateTileObject(Tile tile, Actor owner, ISprite sprite)
         {
             CreateMovePatterns();
-            TileObject to = new(tile, MovePatterns, owner, false, true);
+            TileObject to = new(tile, MovePatterns, owner, sprite, false, true);
             var patternsCopy = new List<MovePattern>(MovePatterns);
             foreach (var mp in patternsCopy)
             {
