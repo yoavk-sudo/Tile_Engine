@@ -20,12 +20,32 @@ namespace Chess_Demo
                 new Sprite("BlackTile3", "BlackTile3"),
                 new Sprite("BlackTile4", "BlackTile4") };
 
+        public Sprite[] WhiteUnits =
+        {
+            new Sprite("Pawn W","Pawn W"),
+            new Sprite("Bishop W","Bishop W"),
+            new Sprite("Knight W","Knight W"),
+            new Sprite("Rook W","Rook W"),
+            new Sprite("Queen W","Queen W"),
+            new Sprite("King W","King W")
+        };
 
+        public Sprite[] BlackUnits =
+        {
+            new Sprite("Pawn B","Pawn B"),
+            new Sprite("Bishop B","Bishop B"),
+            new Sprite("Knight B","Knight B"),
+            new Sprite("Rook B","Rook B"),
+            new Sprite("Queen B","Queen B"),
+            new Sprite("King B","King B")
+        };
 
         public SpriteLoader()
         {
             LoadData(WhiteTiles);
             LoadData(BlackTiles);
+            LoadData(WhiteUnits);
+            LoadData(BlackUnits);
         }
 
         public void SetMapBackground(TileMap map)
