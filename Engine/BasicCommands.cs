@@ -21,7 +21,7 @@ namespace Tile_Engine
 
         private Action OnSelect;
         private Action OnDeselect;
-        private Action OnMove;
+        private Action<object> OnMove;
         static Action OnHelp;
 
         private TileObject _selectedObject;
@@ -31,7 +31,7 @@ namespace Tile_Engine
             OnHelp += HelpPrint;
             OnSelect += Select;
             OnDeselect += Deselect;
-            //OnMove += Move;
+            OnMove += Move;
             AddBasicCommands();
         }
 
@@ -44,11 +44,12 @@ namespace Tile_Engine
         }
         void HelpPrint()
         {
-            for (int i = 0; i < Commands.CommandDescriptions.Count; i++)
+            for (int i = 0; i < Commands.CommandDescriptions.Count + Commands.CommandFunctionsWithInput.Count; i++)
             {
                 Console.Write(Commands.CommandDescriptions.Keys.ToArray()[i] + "\t");
                 Console.Write(Commands.CommandDescriptions.Values.ToArray()[i] + "\n");
             }
+            
             Console.WriteLine();
         }
         void Select()
@@ -78,14 +79,21 @@ namespace Tile_Engine
         {
             _selectedObject = null;
         }
-        void Move(Position newPosition)
+        void Move(object input)
         {
-            if(_selectedObject == null)
+            try
             {
-                Console.WriteLine("Select a tile with an object in it");
-                return;
+                Position newPosition = (Position) input;
+                if (_selectedObject == null)
+                {
+                    Console.WriteLine("Select a tile with an object in it");
+                    return;
+                }
+                _selectedObject.Move(newPosition);
             }
-            _selectedObject.Move(newPosition);
+            catch{
+                throw new InvalidCastException("move input was not a position");
+            }
         }
     }
 }
