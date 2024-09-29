@@ -46,6 +46,7 @@ namespace Tile_Engine
             CurrentTile = currentTile;
             TileObjectMovement = new Movement(this, movePatterns);
             InitializeSpecialRules(canMoveIntoEmpty, canMoveIntoAlly, canMoveIntoEnemy, canMoveOutOfBounds);
+            CurrentTile.NewTileObject(this);
         }
 
         private void InitializeSpecialRules(bool canMoveIntoEmpty, bool canMoveIntoAlly, bool canMoveIntoEnemy, bool canMoveOutOfBounds)
