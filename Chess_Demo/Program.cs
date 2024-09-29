@@ -30,7 +30,7 @@ namespace Chess_Demo
             Console.WriteLine(map.Current);
             map.MoveNext(); 
             Console.WriteLine(map.Current);
-            Pawn p = new();
+            WhitePawn p = new();
             TileObject pawnObject = p.CreateTileObject(map.Map[0, 0], white, sprite);
             for (int i = 0; i < map.Count(); i++)
             {
