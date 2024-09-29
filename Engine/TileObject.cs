@@ -10,19 +10,22 @@ namespace Tile_Engine
 {
     public class TileObject : ICloneable, IDestroyable
     {
+        private ISprite _sprite;
+        private Dictionary<string, bool> _specialRules = new Dictionary<string, bool>();
+        private bool _isLocked;
+
         private const string CAN_MOVE_INTO_EMPTY = "CanMoveIntoEmpty";
         private const string CAN_MOVE_INTO_ALLY = "CanMoveIntoAlly";
         private const string CAN_MOVE_INTO_ENEMY = "CanMoveIntoEnemy";
         private const string CAN_MOVE_OUT_OF_BOUNDS = "CanMoveOutOfBounds";
-        private ISprite _sprite;
-        private Dictionary<string, bool> _specialRules = new Dictionary<string, bool>();
-
+        
         public string Name { get; set; }
         public Position Position => CurrentTile.Position;
         public Actor Owner { get; }
         public Movement TileObjectMovement { get; private set; }
         public Tile CurrentTile { get; set; }
         public IRenderable Texture { get; set; }
+        public bool IsLocked { get => _isLocked; private set => _isLocked = value; }
 
         public event Action OnMove;
 
@@ -75,6 +78,15 @@ namespace Tile_Engine
             bool able = false;
             _specialRules.TryGetValue(CAN_MOVE_OUT_OF_BOUNDS, out able);
             return able;
+        }
+
+        public void Lock()
+        {
+            IsLocked = true;
+        }
+        public void Unlock()
+        {
+            IsLocked = false;
         }
 
         public void OnMoveCallback(Tile newTile)
