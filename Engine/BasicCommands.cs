@@ -43,7 +43,7 @@ namespace Tile_Engine
         }
         void HelpPrint()
         {
-            for (int i = 0; i < Commands.CommandDescriptions.Count + Commands.CommandFunctionsWithInput.Count; i++)
+            for (int i = 0; i < Commands.CommandDescriptions.Count; i++)
             {
                 Console.Write(Commands.CommandDescriptions.Keys.ToArray()[i] + "\t");
                 Console.Write(Commands.CommandDescriptions.Values.ToArray()[i] + "\n");

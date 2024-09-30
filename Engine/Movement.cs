@@ -108,25 +108,25 @@ namespace Tile_Engine
                     newPosition += new Position(-1, 0);
                     break;
                 case MovementDirections.Up:
-                    newPosition += new Position(1, 0);
-                    break;
-                case MovementDirections.Right:
-                    newPosition += new Position(0, 1);
-                    break;
-                case MovementDirections.Down:
                     newPosition += new Position(0, -1);
                     break;
+                case MovementDirections.Right:
+                    newPosition += new Position(1, 0);
+                    break;
+                case MovementDirections.Down:
+                    newPosition += new Position(0, 1);
+                    break;
                 case MovementDirections.UpLeft:
-                    newPosition += new Position(-1, 1);
-                    break;
-                case MovementDirections.UpRight:
-                    newPosition += new Position(1, 1);
-                    break;
-                case MovementDirections.DownLeft:
                     newPosition += new Position(-1, -1);
                     break;
-                case MovementDirections.DownRight:
+                case MovementDirections.UpRight:
                     newPosition += new Position(1, -1);
+                    break;
+                case MovementDirections.DownLeft:
+                    newPosition += new Position(-1, 1);
+                    break;
+                case MovementDirections.DownRight:
+                    newPosition += new Position(1, 1);
                     break;
                 default:
                     break;
