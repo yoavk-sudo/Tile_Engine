@@ -13,14 +13,26 @@ namespace Chess_Demo
         public override event Action EndOfTurn;
 
         public static Player CurrentPlayer {  get; private set; }
+        public static Actor WhitePlayer { get; private set; }
+
+        public static Actor BlackPlayer { get; private set; }
+
 
         private bool isTurnActive;
 
-        public ChessTurnHandler() 
+        public ChessTurnHandler(Actor whitePlayer,Actor blackPlayer) 
         {
             CurrentPlayer = Player.White;
+            WhitePlayer = whitePlayer;
+            BlackPlayer = blackPlayer;
             NewTurn = StartTurn;
             EndOfTurn = BetweenTurns;
+        }
+
+        public static Actor GetCurrentPlayer()
+        {
+            if (CurrentPlayer == Player.White) return WhitePlayer;
+            else return BlackPlayer;
         }
         public override void EndTurn()
         {

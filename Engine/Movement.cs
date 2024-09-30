@@ -43,7 +43,7 @@ namespace Tile_Engine
             return true;
         }
 
-        private (IEnumerable<Position>, IEnumerable<Position>) GetAllPossibleMoves()
+        public (IEnumerable<Position>, IEnumerable<Position>) GetAllPossibleMoves()
         {
             var viableMoves = new List<Position>();
             var nonViableMoves = new List<Position>();

@@ -23,9 +23,6 @@ namespace Tile_Engine
         private Action OnDeselect;
         private Action<object> OnMove;
         static Action OnHelp;
-
-        private static TileObject _selectedObject;
-        public static TileObject SelectedObject { get { return _selectedObject; } private set { _selectedObject = value; } }
         
 
         internal BasicCommands()
@@ -81,8 +78,8 @@ namespace Tile_Engine
             }
 
 
-            _selectedObject = TileMap.Map[pos.X, pos.Y].TileObject;
-            Console.WriteLine($"Selected {SelectedObject}");
+            TileObject.SelectedTileObject = TileMap.Map[pos.X, pos.Y].TileObject;
+            Console.WriteLine($"Selected {TileObject.SelectedTileObject}");
 
         }
 
@@ -115,19 +112,19 @@ namespace Tile_Engine
         
         void Deselect()
         {
-            SelectedObject = null;
+            TileObject.SelectedTileObject = null;
         }
         void Move(object input)
         {
             try
             {
                 Position newPosition = (Position) input;
-                if (SelectedObject == null)
+                if (TileObject.SelectedTileObject == null)
                 {
                     Console.WriteLine("Select a tile with an object in it");
                     return;
                 }
-                SelectedObject.Move(newPosition);
+                TileObject.SelectedTileObject.Move(newPosition);
             }
             catch{
                 throw new InvalidCastException("move input was not a position");

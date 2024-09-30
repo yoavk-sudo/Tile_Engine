@@ -35,6 +35,8 @@ namespace Tile_Engine
         {
             return HashCode.Combine(X, Y);
         }
+        public static bool operator ==(Position pos1, Position pos2) => pos1.X == pos2.X && pos1.Y == pos2.Y;
+        public static bool operator !=(Position pos1, Position pos2) => pos1.X != pos2.X || pos1.Y != pos2.Y;
 
         public static Position operator +(Position posOne, Position posTwo) => new Position(posOne.X + posTwo.X, posOne.Y + posTwo.Y);
         public static Position operator -(Position posOne, Position posTwo) => new Position(posOne.X - posTwo.X, posOne.Y - posTwo.Y);
