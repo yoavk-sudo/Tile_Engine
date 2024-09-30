@@ -99,10 +99,12 @@ namespace Tile_Engine
         {
             if(!TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y)) 
                 return;
+            if (!TileObjectMovement.TryMoveTileObject(this, newPosition))
+                return;
             CurrentTile.TileObject = null;
             CurrentTile = TileMap.Map[newPosition.X, newPosition.Y];
             CurrentTile.NewTileObject(this);
-            OnMove?.Invoke(); // update renderer, let client code decide what to do on new tile and its object
+            OnMove?.Invoke();
         }
         //protected abstract bool CanMoveToTile(Tile newTile);
 

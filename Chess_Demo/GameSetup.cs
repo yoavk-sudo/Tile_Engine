@@ -87,7 +87,7 @@ namespace Chess_Demo
             wRook.CloneTO(map.GetMap()[0, 7]).InitTexture(new TileRenderer());
             bBishop.InitTexture(new TileRenderer());
             wBishop.InitTexture(new TileRenderer());
-            //spriteManager.SetMapBackground(map);
+            Console.WriteLine(wRook.Owner.Name);//spriteManager.SetMapBackground(map);
             //game.MousePressedOnTile += Tint;
             //game.Run();
         }
