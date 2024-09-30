@@ -18,6 +18,8 @@ namespace Chess_Demo
         //TileGame game = new TileGame(map);
         TileGame game = new TileGame(map);
         SpriteLoader spriteManager = new();
+        InputManager inputManager;
+        ChessTurnHandler turnHandler;
         public void CreateChessPieces()
         {
 
@@ -36,6 +38,7 @@ namespace Chess_Demo
 
             Actor white = new("White");
             Actor black = new("Black");
+            turnHandler = new(white,black);
             //pawnObject.Destroy();
 
             WhitePawn p = new();
@@ -95,7 +98,7 @@ namespace Chess_Demo
         public void RunGame()
         {
             spriteManager.SetMapBackground(map);
-            game.MousePressedOnTile += Tint;
+            inputManager = new(game,turnHandler);
             game.Run();
         }
 

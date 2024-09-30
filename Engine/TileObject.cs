@@ -10,6 +10,9 @@ namespace Tile_Engine
 {
     public class TileObject : ICloneable, IDestroyable
     {
+
+        public static TileObject SelectedTileObject {  get; set; }
+
         private ISprite _sprite;
         private Dictionary<string, bool> _specialRules = new Dictionary<string, bool>();
         private bool _isLocked;

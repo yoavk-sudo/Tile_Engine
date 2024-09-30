@@ -5,6 +5,8 @@ namespace Tile_Engine
 {
     public class Tile : IPosition, IDestroyable
     {
+        public static Tile SelectedTile { get; set; }
+
         private ISprite _sprite;
         public Position Position { get; }
         public TileObject TileObject { get; set; } = null;
