@@ -28,7 +28,7 @@ namespace Chess_Demo
 
         private void HandleTileInput(Tile tile)
         {
-            if (TileObject.SelectedTileObject == null && tile.TileObject.Owner.Name == ChessTurnHandler.GetCurrentPlayer().Name)
+            if (TileObject.SelectedTileObject == null && tile.TileObject != null && tile.TileObject.Owner.Name == ChessTurnHandler.GetCurrentPlayer().Name)
             {
                 Commands.ExecuteCommand("Select", tile.Position);
             }
