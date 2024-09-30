@@ -94,28 +94,27 @@ namespace Tile_Engine
             IsLocked = false;
         }
 
-        public void OnMoveCallback(Tile newTile)
-        {
-
-        }
         public void Move(Position newPosition)
         {
             if (!TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
                 return;
-            //if (!TileObjectMovement.TryMoveTileObject(this, newPosition))
-            //    return;
             CurrentTile.TileObject = null;
             CurrentTile = TileMap.Map[newPosition.X, newPosition.Y];
             CurrentTile.NewTileObject(this);
             OnMove?.Invoke();
         }
-        //protected abstract bool CanMoveToTile(Tile newTile);
 
+        /// <summary>
+        /// Constructor without sprites and starting tile
+        /// </summary>
         private TileObject(string name, Actor owner) 
         {
             Name = name;
             Owner = owner;
         }
+        /// <summary>
+        /// Constructor without sprites
+        /// </summary>
         private TileObject(string name, Actor owner, Position position) 
         {
             if (!TileMap.Map.IsWithinBounds(position.X, position.Y))

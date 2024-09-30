@@ -17,6 +17,12 @@ namespace Tile_Engine
             TriggerMove += _owner.Move;
         }
 
+        /// <summary>
+        /// Move object from one tile to another, if possible
+        /// </summary>
+        /// <param name="tObject">The Tile Object.</param>
+        /// <param name="targetPosition">Target Position.</param>
+        /// <returns></returns>
         public bool TryMoveTileObject(TileObject tObject, Position targetPosition)
         {
             if (tObject == null
