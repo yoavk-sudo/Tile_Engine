@@ -75,7 +75,12 @@ namespace Tile_Engine
                             }
                             else
                             {
-                                if (_owner.CanMoveIntoEnemy()) viableMoves.Add(newPosition);
+                                if (_owner.CanMoveIntoEnemy())
+                                {
+                                    Console.WriteLine("Eaten");
+                                    TileMap.Map[newPosition.X, newPosition.Y].TileObject.Destroy();
+                                    viableMoves.Add(newPosition);
+                                }
                                 else
                                 {
                                     nonViableMoves.Add(newPosition);

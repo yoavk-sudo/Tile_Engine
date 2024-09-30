@@ -20,14 +20,14 @@ namespace Chess_Demo
             MovementDirections[] moves7 = { MovementDirections.Right };
             MovementDirections[] moves8 = { MovementDirections.UpRight };
 
-            MovePattern movePattern = new MovePattern(moves, null, TileMap.Map.Length);
-            MovePattern movePattern2 = new MovePattern(moves2, null, TileMap.Map.Length);
-            MovePattern movePattern3 = new MovePattern(moves3, null, TileMap.Map.Length);
-            MovePattern movePattern4 = new MovePattern(moves4, null, TileMap.Map.Length);
-            MovePattern movePattern5 = new MovePattern(moves5, null, TileMap.Map.Length);
-            MovePattern movePattern6 = new MovePattern(moves6, null, TileMap.Map.Length);
-            MovePattern movePattern7 = new MovePattern(moves7, null, TileMap.Map.Length);
-            MovePattern movePattern8 = new MovePattern(moves8, null, TileMap.Map.Length);
+            MovePattern movePattern = new MovePattern(moves, null, TileMap.Map.Length - 1);
+            MovePattern movePattern2 = new MovePattern(moves2, null, TileMap.Map.Length - 1);
+            MovePattern movePattern3 = new MovePattern(moves3, null, TileMap.Map.Length - 1);
+            MovePattern movePattern4 = new MovePattern(moves4, null, TileMap.Map.Length - 1);
+            MovePattern movePattern5 = new MovePattern(moves5, null, TileMap.Map.Length - 1);
+            MovePattern movePattern6 = new MovePattern(moves6, null, TileMap.Map.Length - 1);
+            MovePattern movePattern7 = new MovePattern(moves7, null, TileMap.Map.Length - 1);
+            MovePattern movePattern8 = new MovePattern(moves8, null, TileMap.Map.Length - 1);
 
             MovePatterns.Add(movePattern);
             MovePatterns.Add(movePattern2);
