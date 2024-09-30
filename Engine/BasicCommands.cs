@@ -19,12 +19,14 @@ namespace Tile_Engine
         private const string DESELECT_DESCRIPTION = "Deselects the current tile object";
         private const string MOVE_DESCRIPTION = "Moves the selected tile object (if possible) to position (x,y)";
 
-        private Action OnSelect;
+        private Action<object> OnSelect;
         private Action OnDeselect;
         private Action<object> OnMove;
         static Action OnHelp;
 
-        private TileObject _selectedObject;
+        private static TileObject _selectedObject;
+        public static TileObject SelectedObject { get { return _selectedObject; } private set { _selectedObject = value; } }
+        
 
         internal BasicCommands()
         {
@@ -52,7 +54,41 @@ namespace Tile_Engine
             
             Console.WriteLine();
         }
-        void Select()
+
+        void Select(object input)
+        {
+            try
+            {
+                Position test = (Position)input;
+            }
+            catch
+            {
+                Console.WriteLine("input was not a position");
+                return;
+            }
+            if (TileMap.Map == null)
+            {
+                Console.WriteLine("TileMap was not created");
+                return;
+            }
+
+            Position pos = (Position)input;
+
+            if (!TileMap.Map.IsWithinBounds(pos.X, pos.Y))
+            {
+                Console.WriteLine("Attempted to select outside of map bounds.");
+                return;
+            }
+
+
+            _selectedObject = TileMap.Map[pos.X, pos.Y].TileObject;
+            Console.WriteLine($"Selected {SelectedObject}");
+
+        }
+
+
+        /*
+        void OldSelect()
         {
             if (TileMap.Map == null)
             {
@@ -75,21 +111,23 @@ namespace Tile_Engine
             _selectedObject = TileMap.Map[x,y].TileObject;
             Console.WriteLine($"Selected {_selectedObject}");
         }
+        */
+        
         void Deselect()
         {
-            _selectedObject = null;
+            SelectedObject = null;
         }
         void Move(object input)
         {
             try
             {
                 Position newPosition = (Position) input;
-                if (_selectedObject == null)
+                if (SelectedObject == null)
                 {
                     Console.WriteLine("Select a tile with an object in it");
                     return;
                 }
-                _selectedObject.Move(newPosition);
+                SelectedObject.Move(newPosition);
             }
             catch{
                 throw new InvalidCastException("move input was not a position");
