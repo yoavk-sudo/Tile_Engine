@@ -100,10 +100,10 @@ namespace Tile_Engine
         }
         public void Move(Position newPosition)
         {
-            if(!TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y)) 
+            if (!TileMap.Map.IsWithinBounds(newPosition.X, newPosition.Y))
                 return;
-            if (!TileObjectMovement.TryMoveTileObject(this, newPosition))
-                return;
+            //if (!TileObjectMovement.TryMoveTileObject(this, newPosition))
+            //    return;
             CurrentTile.TileObject = null;
             CurrentTile = TileMap.Map[newPosition.X, newPosition.Y];
             CurrentTile.NewTileObject(this);
