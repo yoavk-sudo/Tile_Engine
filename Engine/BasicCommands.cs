@@ -124,7 +124,7 @@ namespace Tile_Engine
                     Console.WriteLine("Select a tile with an object in it");
                     return;
                 }
-                TileObject.SelectedTileObject.Move(newPosition);
+                TileObject.SelectedTileObject.TileObjectMovement.TryMoveTileObject(TileObject.SelectedTileObject, newPosition);
             }
             catch{
                 throw new InvalidCastException("move input was not a position");

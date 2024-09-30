@@ -21,9 +21,11 @@ namespace Tile_Engine
         {
             if (tObject == null
                 || tObject.IsLocked
-                || !GetAllPossibleMoves().Item1.Contains(targetPosition)
-                || !FullfilsConditionIfPossible(targetPosition))
+                || !FullfilsConditionIfPossible(targetPosition)
+                || !GetAllPossibleMoves().Item1.Contains(targetPosition))
+            {
                 return false;
+            }
             TriggerMove.Invoke(targetPosition);
             return true;
         }
@@ -35,9 +37,8 @@ namespace Tile_Engine
                 if (movePattern.Conditions.HasValue)
                 {
                     var conditions = movePattern.Conditions.Value;
-                    if (!conditions.FullfilsCondition(_owner, targetPosition))
-                        return false;
-                    return true;
+                    if (conditions.FullfilsCondition(_owner, targetPosition))
+                        return true;
                 };
             }
             return true;
@@ -180,7 +181,7 @@ namespace Tile_Engine
 
         public bool FullfilsCondition(TileObject to, Position attempttedPosition)
         {
-            if(!attempttedPosition.Equals(to.Position + _targetPosition))
+            if (!attempttedPosition.Equals(to.Position + _targetPosition))
             {
                 return false;
             }
@@ -196,7 +197,7 @@ namespace Tile_Engine
             {
                 return _canMoveIfTargetIsEnemy;
             }
-            return false;
+            return true;
         }
     }
 

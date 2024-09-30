@@ -16,10 +16,10 @@ namespace Chess_Demo
             MovementDirections[] moves3 = { MovementDirections.DownRight };
             MovementDirections[] moves4 = { MovementDirections.UpRight };
 
-            MovePattern movePattern = new MovePattern(moves, null, TileMap.Map.Length);
-            MovePattern movePattern2 = new MovePattern(moves2, null, TileMap.Map.Length);
-            MovePattern movePattern3 = new MovePattern(moves3, null, TileMap.Map.Length);
-            MovePattern movePattern4 = new MovePattern(moves4, null, TileMap.Map.Length);
+            MovePattern movePattern = new MovePattern(moves, null, TileMap.Map.Length - 1);
+            MovePattern movePattern2 = new MovePattern(moves2, null, TileMap.Map.Length - 1);
+            MovePattern movePattern3 = new MovePattern(moves3, null, TileMap.Map.Length - 1);
+            MovePattern movePattern4 = new MovePattern(moves4, null, TileMap.Map.Length - 1);
 
             MovePatterns.Add(movePattern);
             MovePatterns.Add(movePattern2);
