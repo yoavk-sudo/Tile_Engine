@@ -98,7 +98,7 @@ namespace Chess_Demo
         public void RunGame()
         {
             spriteManager.SetMapBackground(map);
-            inputManager = new(game);
+            inputManager = new(game,turnHandler);
             game.Run();
         }
 
